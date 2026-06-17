@@ -1,12 +1,13 @@
 import copy
 import json
+import math
 import sys
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from scad_builder import build_scad  # noqa: E402
+from scad_builder import build_scad, compute_anchors, compute_stone_geometry, _band_surface_point  # noqa: E402
 
 FIXTURE_PATH = Path(__file__).resolve().parent.parent / "output" / "59273dbf_analysis.json"
 
@@ -45,8 +46,22 @@ def base_analysis() -> dict:
                     "isPresent": True,
                     "averageStoneDiameter": 0.8,
                     "stones": [
-                        {"position": {"x": 3.0, "y": 1.0, "z": 9.5}, "diameter": 0.8},
-                        {"position": {"x": -3.0, "y": -1.0, "z": 9.5}, "diameter": 0.7},
+                        {
+                            "bandPosition": {
+                                "angleFromHeadDegrees": 25.0,
+                                "lateralOffsetDegrees": 0.0,
+                                "heightAboveBandSurface": 0.15,
+                            },
+                            "diameter": 0.8,
+                        },
+                        {
+                            "bandPosition": {
+                                "angleFromHeadDegrees": -25.0,
+                                "lateralOffsetDegrees": 0.0,
+                                "heightAboveBandSurface": 0.15,
+                            },
+                            "diameter": 0.7,
+                        },
                     ],
                 },
                 "5_centerStoneAnalysis": {
@@ -66,7 +81,11 @@ def base_analysis() -> dict:
                     "isPresent": True,
                     "stones": [
                         {
-                            "position": {"x": 9.0, "y": 3.0, "z": 9.1},
+                            "bandPosition": {
+                                "angleFromHeadDegrees": 18.0,
+                                "lateralOffsetDegrees": 0.0,
+                                "heightAboveBandSurface": 0.2,
+                            },
                             "dimensions": {"width": 1.2, "length": 1.5, "depth": 0.8},
                         }
                     ],
@@ -206,6 +225,179 @@ class TestSchemaCoverage(unittest.TestCase):
             code,
             workdir=Path(__file__).resolve().parent / "_artifacts",
             basename="kitchen_sink",
+            timeout=90,
+        )
+        self.assertTrue(result.success, msg=result.stderr)
+        self.assertTrue(result.png_bytes)
+
+
+class TestBandSurfacePointSafety(unittest.TestCase):
+    """The structural guarantee behind the band-relative position convention:
+    no matter what angles/offsets a caller supplies (LLM-extracted or
+    adversarial), a point produced by _band_surface_point can never land
+    inside the finger hole."""
+
+    def _anchors(self):
+        analysis = base_analysis()
+        anchors = compute_anchors(analysis)
+        anchors.update(compute_stone_geometry(analysis, anchors))
+        return anchors
+
+    def test_never_inside_hole_across_wide_angle_sweep(self):
+        anchors = self._anchors()
+        hole_radius = anchors["ring_inner_radius"]
+        for angle in range(-720, 721, 15):
+            for lateral in (-180, -90, 0, 90, 180):
+                for height in (-0.5, 0.0, 0.5, 5.0):
+                    x, y, z = _band_surface_point(anchors, angle, lateral, height)
+                    radial = math.hypot(x, z)
+                    with self.subTest(angle=angle, lateral=lateral, height=height):
+                        self.assertGreaterEqual(radial, hole_radius - 1e-6)
+
+    def test_zero_offsets_land_on_true_band_crest(self):
+        anchors = self._anchors()
+        x, y, z = _band_surface_point(anchors, 0.0, 0.0, 0.0)
+        # angleFromHeadDegrees=0 is "at the head" -- world Z should equal the
+        # band's true outer crest (band_apex_z + band_tube_radius), one full
+        # tube radius beyond band_apex_z itself, which is only the tube's
+        # center and would bury a zero-height stone inside the metal.
+        expected = anchors["band_apex_z"] + anchors["band_tube_radius"]
+        self.assertAlmostEqual(z, expected, places=4)
+
+    def test_zero_height_stone_sits_outside_band_apex_z(self):
+        anchors = self._anchors()
+        x, y, z = _band_surface_point(anchors, 0.0, 0.0, 0.0)
+        self.assertGreater(z, anchors["band_apex_z"])
+
+
+class TestNewDecorativeBuilders(unittest.TestCase):
+    def _analysis_with(self, **section_overrides):
+        analysis = base_analysis()
+        sections = analysis["expertAnalysisQuestionnaire"]["sections"]
+        for key, value in section_overrides.items():
+            sections[key] = value
+        return analysis
+
+    def test_halo_present_via_gallery_style(self):
+        analysis = base_analysis()
+        sections = analysis["expertAnalysisQuestionnaire"]["sections"]
+        sections["7_galleryHeadAssemblyAnalysis"]["galleryGeometry"]["style"]["type"] = "Halo"
+        code = build_scad(analysis)
+        self.assertIn("module halo_stones()", code)
+        self.assertIn("module gallery_halo_basket()", code)
+
+    def test_halo_present_via_explicit_flag_with_other_gallery_style(self):
+        analysis = base_analysis()
+        sections = analysis["expertAnalysisQuestionnaire"]["sections"]
+        sections["7_galleryHeadAssemblyAnalysis"]["haloAnalysis"] = {
+            "isPresent": True, "stoneCount": 20, "stoneDiameter": 0.9,
+            "radialOffsetFromGirdle": 0.5, "heightOffsetFromGirdle": 0.0,
+        }
+        code = build_scad(analysis)
+        self.assertIn("module halo_stones()", code)
+
+    def test_halo_absent_by_default(self):
+        analysis = base_analysis()
+        code = build_scad(analysis)
+        self.assertNotIn("halo_stones", code)
+
+    def test_halo_explicitly_false_skips_ring_even_with_halo_style(self):
+        analysis = base_analysis()
+        sections = analysis["expertAnalysisQuestionnaire"]["sections"]
+        sections["7_galleryHeadAssemblyAnalysis"]["galleryGeometry"]["style"]["type"] = "Halo"
+        sections["7_galleryHeadAssemblyAnalysis"]["haloAnalysis"] = {"isPresent": False}
+        code = build_scad(analysis)
+        self.assertNotIn("module halo_stones()", code)
+        self.assertIn("module gallery_halo_basket()", code)
+
+    def test_milgrain_present(self):
+        analysis = self._analysis_with(**{
+            "3_bandTypeAnalysis": {
+                "decorativeFeatures": {"milgrain": True},
+                "decorativeFeatureDetails": {
+                    "milgrain": {"isPresent": True, "beadDiameter": 0.4, "spacing": 0.5}
+                },
+            }
+        })
+        code = build_scad(analysis)
+        self.assertIn("module milgrain_beads()", code)
+
+    def test_milgrain_absent_by_default(self):
+        code = build_scad(base_analysis())
+        self.assertNotIn("milgrain_beads", code)
+
+    def test_channel_present(self):
+        analysis = self._analysis_with(**{
+            "3_bandTypeAnalysis": {
+                "decorativeFeatures": {"channel": True},
+                "decorativeFeatureDetails": {
+                    "channel": {
+                        "isPresent": True, "stoneCount": 8, "stoneDiameter": 1.0,
+                        "startAngleFromHeadDegrees": 15.0, "endAngleFromHeadDegrees": 70.0,
+                    }
+                },
+            }
+        })
+        code = build_scad(analysis)
+        self.assertIn("module channel_stones()", code)
+
+    def test_filigree_present(self):
+        analysis = self._analysis_with(**{
+            "3_bandTypeAnalysis": {
+                "decorativeFeatures": {"filigree": True},
+                "decorativeFeatureDetails": {
+                    "filigree": {"isPresent": True, "wireThickness": 0.4, "loopCount": 3}
+                },
+            }
+        })
+        code = build_scad(analysis)
+        self.assertIn("filigree_wire_", code)
+
+    def test_pave_stone_missing_band_position_still_renders_and_is_safe(self):
+        """If an individual stone is missing bandPosition entirely (e.g. the
+        extraction model only partially filled the list), the default
+        spread must still land on the band, never at the origin/in the hole."""
+        analysis = base_analysis()
+        sections = analysis["expertAnalysisQuestionnaire"]["sections"]
+        sections["4_paveAccentStoneAnalysis"]["stones"] = [
+            {"diameter": 0.8},
+            {"diameter": 0.7},
+            {"diameter": 0.8},
+        ]
+        code = build_scad(analysis)
+        self.assertIn("module pave_stones()", code)
+
+    def test_full_decorative_combo_renders_via_openscad(self):
+        """Halo + pavé + side stones + milgrain + channel + filigree all at
+        once -- the realistic 'busy' ring case -- actually rendered through
+        the OpenSCAD CLI to prove the new builders compose into valid,
+        non-floating geometry together, not just individually."""
+        from scad_render import render_to_png
+
+        analysis = base_analysis()
+        sections = analysis["expertAnalysisQuestionnaire"]["sections"]
+        sections["7_galleryHeadAssemblyAnalysis"]["galleryGeometry"]["style"]["type"] = "Halo"
+        sections["7_galleryHeadAssemblyAnalysis"]["haloAnalysis"] = {
+            "isPresent": True, "stoneCount": 16, "stoneDiameter": 0.9,
+            "radialOffsetFromGirdle": 0.5, "heightOffsetFromGirdle": 0.0,
+        }
+        sections["3_bandTypeAnalysis"]["decorativeFeatures"] = {
+            "milgrain": True, "channel": True, "filigree": True,
+        }
+        sections["3_bandTypeAnalysis"]["decorativeFeatureDetails"] = {
+            "milgrain": {"isPresent": True, "beadDiameter": 0.35, "spacing": 0.5},
+            "channel": {
+                "isPresent": True, "stoneCount": 6, "stoneDiameter": 1.0,
+                "startAngleFromHeadDegrees": 80.0, "endAngleFromHeadDegrees": 130.0,
+            },
+            "filigree": {"isPresent": True, "wireThickness": 0.4, "loopCount": 3},
+        }
+
+        code = build_scad(analysis)
+        result = render_to_png(
+            code,
+            workdir=Path(__file__).resolve().parent / "_artifacts",
+            basename="full_decorative_combo",
             timeout=90,
         )
         self.assertTrue(result.success, msg=result.stderr)

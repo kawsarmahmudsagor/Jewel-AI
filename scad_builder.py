@@ -202,6 +202,45 @@ def _arch_points(side_sign, x_outer, x_inner, z_start, z_end, r_start, r_end, ar
     return pts
 
 
+def _band_surface_point(anchors, angle_from_head_deg, lateral_offset_deg=0.0, height_above_surface=0.0):
+    """Maps the extraction prompt's band-relative convention (angleFromHeadDegrees,
+    lateralOffsetDegrees, heightAboveBandSurface) onto a point on the band's
+    TRUE outer surface, using the same rotate([90,0,0]) rotate_extrude(...)
+    sweep angle as ring_band_base() for angle_from_head_deg.
+
+    NOTE: band_apex_z is NOT this surface -- by established convention
+    (kept from the validated fixture) band_apex_z is the tube's CENTER
+    height (ring_inner_radius + band_tube_radius), used as an approximate
+    seat for the gallery/head, which works because the gallery foot is
+    sunk down to overlap/fuse with the band anyway. A pavé/milgrain/channel
+    stone has no such overlap to save it -- anchoring height=0 to
+    band_apex_z buries the stone halfway into the solid metal instead of
+    sitting it on top. The real crest is one more band_tube_radius out:
+    ring_inner_radius + 2*band_tube_radius.
+
+    lateral_offset_deg wraps the point around the band's local tube circle
+    starting from that true crest. The lateral offset is clamped to +-85
+    degrees and the final radial distance is floor-clamped to just outside
+    ring_inner_radius -- regardless of what angles a caller (LLM-extracted
+    or adversarial) supplies, the result can never land inside the finger
+    hole."""
+    true_crest_radial = anchors["band_apex_z"] + anchors["band_tube_radius"]
+    base_radial = true_crest_radial + height_above_surface
+    tube_r = anchors["band_tube_radius"]
+    theta = math.radians(90.0 + angle_from_head_deg)
+    beta_deg = max(min(lateral_offset_deg, 85.0), -85.0)
+    beta = math.radians(beta_deg)
+
+    r_prof = base_radial + tube_r * (math.cos(beta) - 1.0)
+    r_prof = max(r_prof, anchors["ring_inner_radius"] + 0.05)
+    w_prof = tube_r * math.sin(beta)
+
+    x = r_prof * math.cos(theta)
+    y = -w_prof
+    z = r_prof * math.sin(theta)
+    return (x, y, z)
+
+
 # ---------------------------------------------------------------------------
 # band assembly (shank configuration)
 # ---------------------------------------------------------------------------
@@ -468,12 +507,46 @@ def _gallery_none(ctx) -> tuple[str, list[str]]:
     return "", []
 
 
+def _gallery_halo_basket(ctx) -> tuple[str, list[str]]:
+    """A halo's own basket is small -- it only needs to cradle the center
+    stone's pavilion, not the whole halo span. Sizing this off gallery.width
+    (as the generic _gallery_cup does) is what produced the oversized
+    'stovepipe' cup bug: for a Halo-style gallery, that field tends to report
+    the full halo diameter, not the basket's own footprint. Size off the
+    stone itself instead -- the halo ring of stones is a separate module
+    (see build_halo_modules) and stays correctly sized regardless."""
+    anchors = ctx["anchors"]
+    gem_r = anchors["gem_radius"]
+    girdle_z = anchors["stone_girdle_z"]
+
+    cup_height = 1.4
+    cup_base_z = girdle_z - cup_height
+    base_outer_r = max(gem_r * 0.55, 1.0)
+    top_outer_r = max(gem_r * 0.75, base_outer_r + 0.3)
+    top_inner_r = max(gem_r - 0.3, 0.5)
+    wall = 0.3
+    return (
+        f"""
+module gallery_halo_basket() {{
+    color(ring_color)
+    difference() {{
+        translate([0, 0, {_fmt(cup_base_z)}])
+            cylinder(r1 = {_fmt(base_outer_r)}, r2 = {_fmt(top_outer_r)}, h = {_fmt(cup_height + 0.2)}, $fn = 48);
+        translate([0, 0, {_fmt(cup_base_z - 0.1)}])
+            cylinder(r1 = {_fmt(base_outer_r - wall)}, r2 = {_fmt(top_inner_r)}, h = {_fmt(cup_height + 0.4)}, $fn = 48);
+    }}
+}}
+""",
+        ["gallery_halo_basket()"],
+    )
+
+
 GALLERY_STYLE_BUILDERS: dict[str, Callable] = {
     "Basket": _gallery_cup,
     "Cathedral": _gallery_cup,
     "Trellis": _gallery_trellis,
     "Peg Head": _gallery_peg,
-    "Halo": _gallery_cup,
+    "Halo": _gallery_halo_basket,
     "Custom": _gallery_cup,
 }
 _GALLERY_DEFAULT = "Basket"
@@ -488,6 +561,53 @@ def build_gallery_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]
     style = _safe(gallery, "style", "type")
     builder = _pick(GALLERY_STYLE_BUILDERS, style, _GALLERY_DEFAULT)
     return builder({"anchors": anchors, "gallery": gallery})
+
+
+def build_halo_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]]:
+    """The ring of small stones around the crown -- independent of which
+    gallery/basket style is underneath, since a halo can sit alongside any
+    of them. Always centered on the stone's own girdle radius, so it can
+    never inherit the gallery's basket-sizing mistakes."""
+    section = _section(analysis, "7_galleryHeadAssemblyAnalysis")
+    halo = _safe(section, "haloAnalysis", default={}) or {}
+    gallery_style = _safe(section, "galleryGeometry", "style", "type")
+
+    present = halo.get("isPresent")
+    if present is False:
+        return "", []
+    if present is not True and gallery_style != "Halo":
+        return "", []
+
+    gem_r = anchors["gem_radius"]
+    girdle_z = anchors["stone_girdle_z"]
+
+    stone_count = halo.get("stoneCount") or 18
+    stone_d = halo.get("stoneDiameter") or 1.0
+    radial_offset = halo.get("radialOffsetFromGirdle")
+    if radial_offset is None:
+        radial_offset = 0.6
+    height_offset = halo.get("heightOffsetFromGirdle") or 0.0
+
+    halo_radius = gem_r + radial_offset
+    halo_z = girdle_z + height_offset
+
+    pts = []
+    for i in range(stone_count):
+        angle = math.radians(360.0 * i / stone_count)
+        pts.append((halo_radius * math.cos(angle), halo_radius * math.sin(angle), halo_z, stone_d / 2.0))
+
+    code = f"""
+module halo_stones() {{
+    color(stone_color)
+    {{
+        pts = {_arr(pts)};
+        for (i = [0 : len(pts) - 1]) {{
+            translate([pts[i][0], pts[i][1], pts[i][2]]) sphere(r = pts[i][3], $fn = 16);
+        }}
+    }}
+}}
+"""
+    return code, ["halo_stones()"]
 
 
 # ---------------------------------------------------------------------------
@@ -680,6 +800,18 @@ def build_setting_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]
 # ---------------------------------------------------------------------------
 
 
+def _default_band_position(index, total, side_spread=(20.0, 160.0)):
+    """Used only when an individual stone's bandPosition is missing --
+    spreads stones evenly down both shoulders so they still land on the
+    band surface (via _band_surface_point) rather than at the origin."""
+    side = 1 if index % 2 == 0 else -1
+    pair_index = index // 2
+    pair_total = max(total // 2, 1)
+    lo, hi = side_spread
+    t = pair_index / max(pair_total - 1, 1) if pair_total > 1 else 0.0
+    return side * (lo + (hi - lo) * t)
+
+
 def build_pave_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]]:
     pave = _section(analysis, "4_paveAccentStoneAnalysis")
     if not pave.get("isPresent"):
@@ -689,13 +821,19 @@ def build_pave_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]]:
         return "", []
 
     default_d = pave.get("averageStoneDiameter") or 1.0
+    n = len(stones)
     pts = []
-    for s in stones:
-        pos = _safe(s, "position", default={}) or {}
-        x = pos.get("x") if pos.get("x") is not None else 0.0
-        y = pos.get("y") if pos.get("y") is not None else 0.0
-        z = pos.get("z") if pos.get("z") is not None else anchors["band_apex_z"]
+    for i, s in enumerate(stones):
+        band_pos = _safe(s, "bandPosition", default={}) or {}
+        angle = band_pos.get("angleFromHeadDegrees")
+        if angle is None:
+            angle = _default_band_position(i, n)
+        lateral = band_pos.get("lateralOffsetDegrees") or 0.0
+        height = band_pos.get("heightAboveBandSurface")
+        if height is None:
+            height = 0.15
         d = s.get("diameter") or default_d
+        x, y, z = _band_surface_point(anchors, angle, lateral, height)
         pts.append((x, y, z, d / 2.0))
 
     code = f"""
@@ -720,18 +858,24 @@ def build_side_stone_modules(analysis: dict, anchors: dict) -> tuple[str, list[s
     if not stones:
         return "", []
 
+    n = len(stones)
     fragments = []
     names = []
     for i, s in enumerate(stones):
-        pos = _safe(s, "position", default={}) or {}
+        band_pos = _safe(s, "bandPosition", default={}) or {}
         dims = _safe(s, "dimensions", default={}) or {}
-        x = pos.get("x") if pos.get("x") is not None else (anchors["ring_inner_radius"] + anchors["band_tube_radius"])
-        y = pos.get("y") if pos.get("y") is not None else 0.0
-        z = pos.get("z") if pos.get("z") is not None else anchors["band_apex_z"]
+        angle = band_pos.get("angleFromHeadDegrees")
+        if angle is None:
+            angle = _default_band_position(i, n, side_spread=(15.0, 35.0))
+        lateral = band_pos.get("lateralOffsetDegrees") or 0.0
+        height = band_pos.get("heightAboveBandSurface")
+        if height is None:
+            height = 0.2
         w = dims.get("width") or 1.2
         length = dims.get("length") or w
         d = dims.get("depth") or w * 0.6
 
+        x, y, z = _band_surface_point(anchors, angle, lateral, height)
         name = f"side_stone_{i}"
         fragments.append(
             f"""
@@ -744,6 +888,110 @@ module {name}() {{
 """
         )
         names.append(f"{name}()")
+    return "\n".join(fragments), names
+
+
+# ---------------------------------------------------------------------------
+# decorative features: milgrain, filigree, channel-set stones
+# ---------------------------------------------------------------------------
+
+
+def build_milgrain_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]]:
+    band_type_section = _section(analysis, "3_bandTypeAnalysis")
+    milgrain = _safe(band_type_section, "decorativeFeatureDetails", "milgrain", default={}) or {}
+    decorative = _safe(band_type_section, "decorativeFeatures", default={}) or {}
+    if not (milgrain.get("isPresent") or decorative.get("milgrain")):
+        return "", []
+
+    bead_d = milgrain.get("beadDiameter") or 0.4
+    spacing = milgrain.get("spacing") or 0.5
+    circumference = 2 * math.pi * (anchors["ring_inner_radius"] + anchors["band_tube_radius"])
+    count = max(int(circumference / max(spacing, 0.2)), 8)
+
+    pts = []
+    for i in range(count):
+        angle = -180.0 + 360.0 * i / count
+        x, y, z = _band_surface_point(anchors, angle, 0.0, bead_d * 0.3)
+        pts.append((x, y, z, bead_d / 2.0))
+
+    code = f"""
+module milgrain_beads() {{
+    color(ring_color)
+    {{
+        pts = {_arr(pts)};
+        for (i = [0 : len(pts) - 1]) {{
+            translate([pts[i][0], pts[i][1], pts[i][2]]) sphere(r = pts[i][3], $fn = 12);
+        }}
+    }}
+}}
+"""
+    return code, ["milgrain_beads()"]
+
+
+def build_channel_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]]:
+    band_type_section = _section(analysis, "3_bandTypeAnalysis")
+    channel = _safe(band_type_section, "decorativeFeatureDetails", "channel", default={}) or {}
+    decorative = _safe(band_type_section, "decorativeFeatures", default={}) or {}
+    if not (channel.get("isPresent") or decorative.get("channel")):
+        return "", []
+
+    count = channel.get("stoneCount") or 10
+    diameter = channel.get("stoneDiameter") or 1.0
+    start_angle = channel.get("startAngleFromHeadDegrees")
+    end_angle = channel.get("endAngleFromHeadDegrees")
+    if start_angle is None or end_angle is None:
+        start_angle, end_angle = 15.0, 70.0
+
+    pts = []
+    for i in range(count):
+        t = i / max(count - 1, 1)
+        angle = start_angle + (end_angle - start_angle) * t
+        x, y, z = _band_surface_point(anchors, angle, 0.0, diameter * 0.1)
+        pts.append((x, y, z, diameter / 2.0))
+
+    code = f"""
+module channel_stones() {{
+    color(stone_color)
+    {{
+        pts = {_arr(pts)};
+        for (i = [0 : len(pts) - 1]) {{
+            translate([pts[i][0], pts[i][1], pts[i][2]]) sphere(r = pts[i][3], $fn = 16);
+        }}
+    }}
+}}
+"""
+    return code, ["channel_stones()"]
+
+
+def build_filigree_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]]:
+    """A tasteful, structurally-safe approximation -- fine wire loops near
+    the gallery sides, built with the same sphere-hull-chain technique as
+    the trellis wires. Full scrollwork realism is left to the refine LLM's
+    free rewrite, consistent with this module's scope (mechanical/safe
+    parameters only, never freeform aesthetic judgment)."""
+    band_type_section = _section(analysis, "3_bandTypeAnalysis")
+    filigree = _safe(band_type_section, "decorativeFeatureDetails", "filigree", default={}) or {}
+    decorative = _safe(band_type_section, "decorativeFeatures", default={}) or {}
+    if not (filigree.get("isPresent") or decorative.get("filigree")):
+        return "", []
+
+    wire_r = (filigree.get("wireThickness") or 0.4) / 2.0
+    loop_count = filigree.get("loopCount") or 3
+    top_z = anchors["gallery_top_z"]
+    base_z = anchors["band_apex_z"] - 0.2
+    r = max(anchors.get("gem_radius", 2.0) * 0.7, 1.0)
+
+    fragments = []
+    names = []
+    for side in (1, -1):
+        for k in range(loop_count):
+            angle = 50 + k * (80.0 / max(loop_count - 1, 1))
+            x = side * r * math.cos(math.radians(angle))
+            y = r * math.sin(math.radians(angle)) * 0.4
+            pts = [(0.0, side * 0.3, base_z, wire_r), (x, y, top_z - 0.3, wire_r * 0.7)]
+            name = f"filigree_wire_{side if side > 0 else 0}_{k}"
+            fragments.append(_sphere_hull_chain(name, pts, "ring_color"))
+            names.append(f"{name}()")
     return "\n".join(fragments), names
 
 
@@ -790,10 +1038,14 @@ def build_scad(analysis: dict) -> str:
         build_band_modules(analysis, anchors),
         build_shoulder_modules(analysis, anchors, skip=False),
         build_gallery_modules(analysis, anchors),
+        build_halo_modules(analysis, anchors),
         build_setting_modules(analysis, anchors),
         build_stone_module(analysis, anchors),
         build_pave_modules(analysis, anchors),
         build_side_stone_modules(analysis, anchors),
+        build_milgrain_modules(analysis, anchors),
+        build_channel_modules(analysis, anchors),
+        build_filigree_modules(analysis, anchors),
     ]
 
     modules_code = []

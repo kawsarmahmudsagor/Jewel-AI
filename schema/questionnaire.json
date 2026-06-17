@@ -119,6 +119,25 @@
           "channel": null,
           "none": null
         },
+        "decorativeFeatureDetails": {
+          "milgrain": {
+            "isPresent": null,
+            "beadDiameter": null,
+            "spacing": null
+          },
+          "filigree": {
+            "isPresent": null,
+            "wireThickness": null,
+            "loopCount": null
+          },
+          "channel": {
+            "isPresent": null,
+            "stoneCount": null,
+            "stoneDiameter": null,
+            "startAngleFromHeadDegrees": null,
+            "endAngleFromHeadDegrees": null
+          }
+        },
         "bandSummary": {
           "finalStyleClassification": null,
           "totalBandArms": null,
@@ -151,7 +170,11 @@
         },
         "stones": [
           {
-            "position": { "x": null, "y": null, "z": null },
+            "bandPosition": {
+              "angleFromHeadDegrees": null,
+              "lateralOffsetDegrees": null,
+              "heightAboveBandSurface": null
+            },
             "diameter": null,
             "settingType": null
           }
@@ -202,7 +225,11 @@
         "totalCount": null,
         "stones": [
           {
-            "position": { "x": null, "y": null, "z": null },
+            "bandPosition": {
+              "angleFromHeadDegrees": null,
+              "lateralOffsetDegrees": null,
+              "heightAboveBandSurface": null
+            },
             "dimensions": {
               "width": null,
               "length": null,
@@ -233,6 +260,13 @@
             "type": null,
             "options": ["Basket", "Cathedral", "Trellis", "Peg Head", "Halo", "Custom"]
           }
+        },
+        "haloAnalysis": {
+          "isPresent": null,
+          "stoneCount": null,
+          "stoneDiameter": null,
+          "radialOffsetFromGirdle": null,
+          "heightOffsetFromGirdle": null
         },
         "galleryComponents": {
           "shouldersPresent": null,

@@ -1,0 +1,589 @@
+{
+  "expertAnalysisQuestionnaire": {
+    "sections": {
+      "1_generalComponentAnalysis": {
+        "title": "General Component Analysis",
+        "perComponent": {
+          "name": "Cathedral Halo Ring Assembly",
+          "type": "Complete Assembly",
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "dimensions": {
+            "radius": 10.25,
+            "diameter": 20.5,
+            "width": 9.5,
+            "height": 22.5,
+            "depth": 20.5,
+            "thickness": 2.0
+          },
+          "shapeClassification": "Round",
+          "styleClassification": "Cathedral Halo",
+          "parentComponent": null,
+          "childComponents": [
+            "Ring Band",
+            "Gallery Head Assembly",
+            "Center Stone"
+          ],
+          "relationships": [
+            "Band supports Gallery Head Assembly",
+            "Gallery Head Assembly supports Center Stone"
+          ],
+          "confidenceScore": 0.95
+        }
+      },
+      "2_ringBandAnalysis": {
+        "title": "Ring Band Analysis",
+        "ringParameters": {
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": -8.25
+          },
+          "orientation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "primarySymmetryAxis": "Y",
+          "innerRadius": 8.25,
+          "innerDiameter": 16.5,
+          "estimatedFingerSize": "US 6"
+        },
+        "bandGeometry": {
+          "widthAtBottomShank": 2.0,
+          "widthAtShoulder": 2.2,
+          "widthNearCenterSetting": 1.8,
+          "thicknessAtBottomShank": 1.6,
+          "thicknessAtShoulder": 2.1,
+          "thicknessAtSplitRegion": null,
+          "bandConfiguration": {
+            "type": "Single Shank"
+          },
+          "isSymmetrical": true,
+          "crossSectionalShape": {
+            "type": "Half Round"
+          },
+          "taperProfile": "Slightly tapered towards the head, cathedral style",
+          "edgeFilletRadius": 0.2
+        },
+        "curvedGeometryAnalysis": {
+          "containsCurves": true,
+          "containsWaves": false,
+          "containsTwists": false,
+          "containsOrganicGeometry": false,
+          "majorCurveCount": 1,
+          "curves": [
+            {
+              "startPosition": {
+                "x": -8.25,
+                "y": 0.0,
+                "z": -8.25
+              },
+              "endPosition": {
+                "x": 8.25,
+                "y": 0.0,
+                "z": -8.25
+              },
+              "radius": 8.25,
+              "angle": 180.0,
+              "controlPoints": []
+            }
+          ]
+        }
+      },
+      "3_bandTypeAnalysis": {
+        "title": "Band Type Analysis",
+        "mandatory": true,
+        "bandStyleClassification": {
+          "overallStyle": "Cathedral"
+        },
+        "splitShankAnalysis": {
+          "isPresent": false,
+          "isSymmetrical": null,
+          "armsPerSide": null,
+          "totalArms": null,
+          "splitStartPosition": null,
+          "splitEndPosition": null,
+          "armWidth": null,
+          "armThickness": null,
+          "armSeparationDistance": null,
+          "armCurvatureRadius": null,
+          "armTaperRatio": null,
+          "armOrientation": null,
+          "armMergePointAtCenterSetting": null
+        },
+        "shoulderAnalysis": {
+          "style": {
+            "type": "Cathedral"
+          },
+          "width": 2.2,
+          "height": 6.5,
+          "thickness": 2.0,
+          "curvature": "High upward arch"
+        },
+        "decorativeFeatures": {
+          "pave": true,
+          "engraving": false,
+          "milgrain": false,
+          "filigree": false,
+          "texture": false,
+          "channel": false,
+          "none": false
+        },
+        "decorativeFeatureDetails": {
+          "milgrain": {
+            "isPresent": false,
+            "beadDiameter": null,
+            "spacing": null
+          },
+          "filigree": {
+            "isPresent": false,
+            "wireThickness": null,
+            "loopCount": null
+          },
+          "channel": {
+            "isPresent": false,
+            "stoneCount": null,
+            "stoneDiameter": null,
+            "startAngleFromHeadDegrees": null,
+            "endAngleFromHeadDegrees": null
+          }
+        },
+        "bandSummary": {
+          "finalStyleClassification": "Cathedral Pav\u00e9",
+          "totalBandArms": 2,
+          "shankConfiguration": "Single Shank",
+          "crossSection": "Half Round",
+          "overallWidth": 2.2,
+          "overallThickness": 2.1,
+          "shoulderDesign": "Cathedral",
+          "decorativeFeaturesPresent": [
+            "Pav\u00e9"
+          ],
+          "integrationWithCenterSetting": "Cathedral shoulders attach to the underside of the halo",
+          "confidenceScore": 0.95
+        }
+      },
+      "4_paveAccentStoneAnalysis": {
+        "title": "Pav\u00e9 / Accent Stone Analysis",
+        "isPresent": true,
+        "locations": [
+          "Shoulders"
+        ],
+        "distributionPattern": "Linear row along each shoulder",
+        "averageStoneDiameter": 1.3,
+        "averageStoneRadius": 0.65,
+        "totalStoneCount": 20,
+        "settingStyle": {
+          "type": "Micro Pav\u00e9"
+        },
+        "arrangementPattern": {
+          "type": "Single Row"
+        },
+        "stones": [
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -15.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -20.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -25.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -30.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -35.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -40.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -45.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -50.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -55.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": -60.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 15.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 20.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 25.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 30.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 35.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 40.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 45.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 50.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 55.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 60.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          }
+        ]
+      },
+      "5_centerStoneAnalysis": {
+        "title": "Center Stone Analysis",
+        "geometry": {
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 4.2
+          },
+          "width": 6.5,
+          "length": 6.5,
+          "depth": 4.0,
+          "diameter": 6.5,
+          "shape": {
+            "type": "Round"
+          },
+          "orientationAngle": 0.0,
+          "elevationAboveBand": 4.2,
+          "tableDirection": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "estimatedCutStyle": "Round Brilliant"
+        },
+        "setting": {
+          "type": {
+            "value": "Halo"
+          },
+          "prongCount": 4,
+          "prongHeight": 1.5,
+          "prongThickness": 0.8,
+          "prongShape": "Claw",
+          "prongAngularPositions": [
+            45,
+            135,
+            225,
+            315
+          ],
+          "decorativeSettingElementsPresent": [
+            "Halo"
+          ],
+          "relationshipToGalleryHead": "Prongs integrated into the basket/halo assembly"
+        }
+      },
+      "6_sideStoneAnalysis": {
+        "title": "Side Stone Analysis",
+        "isPresent": false,
+        "totalCount": 0,
+        "stones": []
+      },
+      "7_galleryHeadAssemblyAnalysis": {
+        "title": "Gallery / Head Assembly Analysis",
+        "galleryGeometry": {
+          "isPresent": true,
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 2.1
+          },
+          "width": 9.5,
+          "height": 4.2,
+          "depth": 9.5,
+          "style": {
+            "type": "Halo"
+          }
+        },
+        "haloAnalysis": {
+          "isPresent": true,
+          "stoneCount": 18,
+          "stoneDiameter": 1.1,
+          "radialOffsetFromGirdle": 0.6,
+          "heightOffsetFromGirdle": -0.8
+        },
+        "galleryComponents": {
+          "shouldersPresent": true,
+          "railsPresent": true,
+          "bridgesOrSupportBarsPresent": true,
+          "bridgeOrSupportBarCount": 2,
+          "supportRingPresent": true,
+          "decorativeElements": {
+            "filigree": false,
+            "scroll": false,
+            "lattice": false,
+            "openwork": true
+          }
+        },
+        "galleryStoneAnalysis": {
+          "stonesPresent": true,
+          "stoneCount": 18,
+          "stoneSizes": [
+            1.1
+          ],
+          "stoneShapes": [
+            "Round"
+          ],
+          "settingStyle": "Pave"
+        }
+      },
+      "8_componentRelationshipMapping": {
+        "title": "Component Relationship Mapping",
+        "perComponent": {
+          "componentName": "Center Stone",
+          "parentComponent": "Gallery Head Assembly",
+          "childComponents": [],
+          "attachedTo": "Prongs",
+          "supports": null,
+          "supportedBy": "Gallery Basket",
+          "directConnections": [
+            "Prongs",
+            "Gallery Basket"
+          ]
+        },
+        "keyRelationships": {
+          "bandSupportsGallery": true,
+          "gallerySupportscenterStone": true,
+          "prongsHoldCenterStone": true,
+          "splitArmsMergeIntoHeadAssembly": false
+        }
+      },
+      "9_cadReconstructionParameters": {
+        "perComponent": {
+          "componentName": "Cathedral Halo Ring Assembly",
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "dimensions": {
+            "width": 9.5,
+            "height": 22.5,
+            "depth": 20.5,
+            "radius": 10.25,
+            "diameter": 20.5,
+            "thickness": 2.0
+          },
+          "shapeClassification": "Round",
+          "styleClassification": "Cathedral Halo",
+          "settingType": "Prong with Halo",
+          "parentComponent": null,
+          "childComponents": [
+            "Ring Band",
+            "Gallery Head Assembly",
+            "Center Stone",
+            "Halo Stones",
+            "Pave Stones"
+          ],
+          "confidenceScore": 0.98,
+          "proceduralCADParameters": {
+            "targetSoftware": "OpenSCAD",
+            "primitives": [
+              "cylinder",
+              "sphere",
+              "rotate_extrude"
+            ],
+            "booleanOperations": [
+              "union",
+              "difference"
+            ],
+            "transformations": [
+              "translate",
+              "rotate"
+            ],
+            "customParameters": {
+              "innerRadius": 8.25,
+              "haloStoneCount": 18,
+              "paveStoneCount": 32
+            }
+          }
+        }
+      }
+    }
+  },
+  "photoContext": {
+    "viewAngle": "three_quarter",
+    "estimatedTiltDegrees": 55.0,
+    "reliableDimensions": [
+      "width",
+      "height"
+    ],
+    "visibleComponents": [
+      "center stone",
+      "halo",
+      "prongs",
+      "band",
+      "shoulders",
+      "pav\u00e9 stones"
+    ],
+    "partiallyVisibleComponents": [
+      "gallery basket",
+      "under-rail"
+    ],
+    "hiddenComponents": [
+      "inside bottom shank detail"
+    ]
+  },
+  "assemblyStack": {
+    "bandTopZ": 0.0,
+    "bandBottomZ": 0.0,
+    "galleryBaseZ": 0.0,
+    "galleryTopZ": 4.2,
+    "stoneGirdleZ": 4.2,
+    "stoneTableZ": 5.24,
+    "prongTipZ": 5.4,
+    "haloPlaneZ": 3.2
+  },
+  "gemstoneColor": {
+    "colorName": "Colorless",
+    "colorHex": "#E8F4FF",
+    "transparency": "Transparent"
+  }
+}

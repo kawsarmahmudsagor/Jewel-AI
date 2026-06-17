@@ -21,7 +21,9 @@
       "Read(//c/Users/BS23-DESKTOP-00038/Downloads/rings_new/**)",
       "Bash(.venv/Scripts/python.exe -c ' *)",
       "WebFetch(domain:openrouter.ai)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(python -c \"import json; json.load\\(open\\('schema/questionnaire.json', encoding='utf-8'\\)\\); print\\('valid JSON'\\)\")",
+      "Bash(\"/c/Program Files/OpenSCAD/openscad.exe\" -o output/_check_hires.png --imgsize=1600,1600 --render --autocenter --viewall output/23e72217/ring.scad)"
     ]
   }
 }
