@@ -8,7 +8,7 @@ from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 
 from extractor import extract
-from scad_builder import build_scad
+from module_generator import build_scad_via_llm
 from generator import refine
 
 load_dotenv()
@@ -20,6 +20,7 @@ OUTPUT_DIR.mkdir(exist_ok=True)
 
 ALLOWED_CONTENT_TYPES = {"image/jpeg", "image/png", "image/webp"}
 REFINE_MAX_ROUNDS = int(os.getenv("REFINE_MAX_ROUNDS", "3"))
+REFINE_MIN_ROUNDS = int(os.getenv("REFINE_MIN_ROUNDS", "2"))
 
 
 @app.post("/generate")
@@ -44,7 +45,7 @@ async def generate_scad(image: UploadFile = File(...)):
         raise HTTPException(status_code=502, detail=f"VLM extraction failed: {e}")
 
     try:
-        draft_scad = build_scad(analysis)
+        draft_scad, draft_source = build_scad_via_llm(analysis, workdir=run_dir)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Procedural SCAD build failed: {e}")
 
@@ -58,6 +59,7 @@ async def generate_scad(image: UploadFile = File(...)):
             image_bytes,
             image.content_type,
             max_rounds=REFINE_MAX_ROUNDS,
+            min_rounds=REFINE_MIN_ROUNDS,
             run_id=run_id,
             artifacts_dir=run_dir,
         )
@@ -81,6 +83,7 @@ async def generate_scad(image: UploadFile = File(...)):
             "run_id": run_id,
             "status": result.status,
             "rounds_used": len(result.rounds),
+            "draft_source": draft_source,
             "analysis": result.analysis,
             "scad_code": result.scad_code,
             "saved_analysis": str(analysis_path),

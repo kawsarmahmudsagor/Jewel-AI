@@ -596,7 +596,7 @@ def build_halo_modules(analysis: dict, anchors: dict) -> tuple[str, list[str]]:
         angle = math.radians(360.0 * i / stone_count)
         pts.append((halo_radius * math.cos(angle), halo_radius * math.sin(angle), halo_z, stone_d / 2.0))
 
-    code = f"""
+    stones_code = f"""
 module halo_stones() {{
     color(stone_color)
     {{
@@ -607,7 +607,24 @@ module halo_stones() {{
     }}
 }}
 """
-    return code, ["halo_stones()"]
+
+    # A thin metal ring under the stones so the halo reads as set-in-metal
+    # rather than spheres floating in air -- sized smaller than the stones
+    # so it cradles them from below without swallowing them, and positioned
+    # to overlap the stones' lower half so union() actually fuses the two.
+    mount_tube_r = stone_d * 0.35
+    mount_z = halo_z - stone_d * 0.25
+    mount_code = f"""
+module halo_mount() {{
+    color(ring_color)
+    translate([0, 0, {_fmt(mount_z)}])
+        rotate_extrude(angle = 360, $fn = 64)
+            translate([{_fmt(halo_radius)}, 0])
+                circle(r = {_fmt(mount_tube_r)}, $fn = 24);
+}}
+"""
+
+    return stones_code + mount_code, ["halo_stones()", "halo_mount()"]
 
 
 # ---------------------------------------------------------------------------
@@ -761,14 +778,47 @@ def _setting_bezel(ctx) -> tuple[str, list[str]]:
     crown_height = anchors["gem_crown_height"]
     wall = 0.5
     height = crown_height + 0.6
+    base_z = girdle_z - 0.3
+    top_z = base_z + height
+
+    # a scalloped top rim -- a ring of small sphere cutouts carved into the
+    # top edge, evenly spaced by circumference. Purely decorative, applied
+    # unconditionally rather than gated on a schema field the extraction
+    # prompt doesn't currently capture; the refine pass can still smooth
+    # this out if the photo shows a plain rim.
+    # Center each cut sphere INSIDE the rim's wall thickness and pull it
+    # below the flat top face -- not exactly on the outer wall or the top
+    # face plane. A cut sphere centered exactly on a flat face/wall is
+    # tangent to it, which is precisely what produces a degenerate
+    # (non-2-manifold) CGAL surface; centering it inside the solid with a
+    # radius bigger than the offset to each surface guarantees a clean
+    # overlapping bite instead.
+    scallop_r = wall * 0.7
+    scallop_radial = gem_r + wall * 0.5
+    scallop_z = top_z - scallop_r * 0.5
+    circumference = 2 * math.pi * (gem_r + wall)
+    scallop_count = max(int(circumference / (scallop_r * 2.4)), 8)
+    scallop_pts = []
+    for i in range(scallop_count):
+        angle = math.radians(360.0 * i / scallop_count)
+        scallop_pts.append((scallop_radial * math.cos(angle), scallop_radial * math.sin(angle), scallop_z, scallop_r))
+
     code = f"""
 module bezel_collar() {{
     color(prong_color)
     difference() {{
-        translate([0, 0, {_fmt(girdle_z - 0.3)}])
-            cylinder(r = {_fmt(gem_r + wall)}, h = {_fmt(height)}, $fn = 64);
-        translate([0, 0, {_fmt(girdle_z - 0.4)}])
-            cylinder(r = {_fmt(gem_r)}, h = {_fmt(height + 0.2)}, $fn = 64);
+        difference() {{
+            translate([0, 0, {_fmt(base_z)}])
+                cylinder(r = {_fmt(gem_r + wall)}, h = {_fmt(height)}, $fn = 64);
+            translate([0, 0, {_fmt(girdle_z - 0.4)}])
+                cylinder(r = {_fmt(gem_r)}, h = {_fmt(height + 0.2)}, $fn = 64);
+        }}
+        {{
+            pts = {_arr(scallop_pts)};
+            for (i = [0 : len(pts) - 1]) {{
+                translate([pts[i][0], pts[i][1], pts[i][2]]) sphere(r = pts[i][3], $fn = 12);
+            }}
+        }}
     }}
 }}
 """

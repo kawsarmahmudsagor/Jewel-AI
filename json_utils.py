@@ -100,7 +100,12 @@ def parse_llm_json(raw: str) -> Any:
         if not cand:
             continue
         try:
-            return json.loads(cand)
+            # strict=False: LLMs frequently emit a literal control character
+            # (e.g. a raw newline) inside a long code string instead of the
+            # \n escape we ask for. Strict JSON rejects that outright even
+            # though the structure is otherwise perfectly valid -- this is
+            # exactly the failure mode that breaks large scad_code payloads.
+            return json.loads(cand, strict=False)
         except json.JSONDecodeError as e:
             last_err = e
             continue

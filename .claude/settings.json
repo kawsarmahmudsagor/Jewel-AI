@@ -23,7 +23,16 @@
       "WebFetch(domain:openrouter.ai)",
       "WebSearch",
       "Bash(python -c \"import json; json.load\\(open\\('schema/questionnaire.json', encoding='utf-8'\\)\\); print\\('valid JSON'\\)\")",
-      "Bash(\"/c/Program Files/OpenSCAD/openscad.exe\" -o output/_check_hires.png --imgsize=1600,1600 --render --autocenter --viewall output/23e72217/ring.scad)"
+      "Bash(\"/c/Program Files/OpenSCAD/openscad.exe\" -o output/_check_hires.png --imgsize=1600,1600 --render --autocenter --viewall output/23e72217/ring.scad)",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_scad_builder -v)",
+      "Bash(\"/c/Program Files/OpenSCAD/openscad.exe\" -o output/_recheck.png --imgsize=1200,1200 --render --autocenter --viewall output/_recheck.scad)",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_module_generator -v)",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_scad_builder tests.test_scad_render tests.test_generator_refine tests.test_module_generator)",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_generator_refine -v)",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_generator_refine tests.test_json_utils -v)",
+      "Bash(\"/c/Program Files/OpenSCAD/openscad.exe\" -o output/_bezel_test.png --imgsize=900,900 --render --autocenter --viewall output/_bezel_test.scad)",
+      "Bash(\"/c/Program Files/OpenSCAD/openscad.exe\" -o output/_bezel_nosallop_full.png --imgsize=400,400 --render output/_bezel_nosallop_full.scad)",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_scad_builder tests.test_scad_render tests.test_generator_refine tests.test_module_generator tests.test_json_utils)"
     ]
   }
 }

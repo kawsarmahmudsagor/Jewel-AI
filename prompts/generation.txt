@@ -56,18 +56,50 @@ EXPLICITLY IGNORE when judging the render:
 - Minor anti-aliasing/jagged edges from the preview renderer
 
 ════════════════════════════════════════════════════════
+## MANDATORY CHECKLIST — answer honestly, item by item, before setting status
+════════════════════════════════════════════════════════
+A single overall "looks fine" judgment is exactly how broken renders have slipped through
+before (floating pavé stones, an oversized halo cup, spike-shaped prongs were all once accepted
+as "final" on round 1). Instead of one holistic call, answer each of these as true/false by
+actually checking the render against the photo:
+
+- band_style_matches: band configuration, cross-section, and shoulder style match the photo
+- stone_shape_count_matches: center stone shape/proportions AND any side-stone count match
+- prong_count_and_style_matches: prong count matches, and prongs read as claws gripping the
+  crown — not spikes above it, not stubs buried in the gallery
+- decorative_features_match: halo / pavé / milgrain / channel / filigree are present in the
+  render wherever the photo shows them, absent wherever it doesn't, and actually VISIBLE
+  (not buried inside the band or floating disconnected from it)
+- no_floating_or_buried_geometry: every visible part sits ON the band/gallery surface with no
+  gaps and no parts swallowed inside the metal
+
+status may only be "final" if every single item above is true. If even one is false, status
+MUST be "revise" — fix that specific issue in scad_code rather than re-submitting the same file.
+
+════════════════════════════════════════════════════════
 ## OUTPUT FORMAT
 ════════════════════════════════════════════════════════
 Return a JSON object with exactly these keys:
 {
+  "checklist": {
+    "band_style_matches": true | false,
+    "stone_shape_count_matches": true | false,
+    "prong_count_and_style_matches": true | false,
+    "decorative_features_match": true | false,
+    "no_floating_or_buried_geometry": true | false
+  },
   "status": "final" | "revise",
   "scad_code": "...complete OpenSCAD file as a single string...",
   "section_9": { ...cadReconstructionParameters object describing what was actually built... },
-  "notes": "short summary of what you changed or why you accepted the draft as-is"
+  "notes": "short summary of what you changed, or which checklist item failed and why"
 }
 
-- "status": "final" means the render now matches the photo well enough to ship; "revise" means
-  you are returning a fixed/improved scad_code that should be re-rendered and re-checked.
+- "checklist" is always required, on every round, including fix_error rounds (best-effort —
+  you may not have a render to judge yet on the first error-fix; use your judgment from the
+  code/photo and mark items you cannot yet verify as false).
+- "status": "final" means every checklist item is true AND the render matches the photo well
+  enough to ship; "revise" means you are returning a fixed/improved scad_code to re-render and
+  re-check.
 - "scad_code" is always required, even when status is "final" — re-emit the complete file
   (with any final tweaks applied), not a diff.
 - "section_9" is always required on every round — fill it with your best current

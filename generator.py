@@ -35,6 +35,15 @@ class RoundLog:
     render: RenderResult
     llm_status: Optional[str] = None
     notes: Optional[str] = None
+    checklist: Optional[dict] = None
+
+
+def _checklist_passed(checklist) -> bool:
+    """A missing/empty/non-dict checklist counts as NOT passed -- fail
+    toward more iteration rather than trusting an unverifiable claim."""
+    if not isinstance(checklist, dict) or not checklist:
+        return False
+    return all(bool(v) for v in checklist.values())
 
 
 @dataclass
@@ -64,7 +73,14 @@ def _call_llm(system_prompt: str, user_content: list) -> dict:
         temperature=0.1,
     )
     raw = response.choices[0].message.content
-    result = parse_llm_json(raw)
+    try:
+        result = parse_llm_json(raw)
+    except ValueError:
+        # A response that's unparseable even after parse_llm_json's own
+        # recovery attempts must not crash the whole request -- an empty
+        # dict here flows into the same "missing status/checklist defaults
+        # to revise" fallback every other caller already handles.
+        return {}
     return result if isinstance(result, dict) else {}
 
 
@@ -130,12 +146,21 @@ def refine(
     content_type: str,
     *,
     max_rounds: int = 3,
+    min_rounds: int = 1,
     run_id: Optional[str] = None,
     artifacts_dir: Optional[Path] = None,
 ) -> RefineResult:
     """Render -> fix-error or visual-critique -> loop, capped at max_rounds shared
     across both round kinds. Always returns the last successfully-rendered version
-    if the cap is hit without acceptance; never raises on LLM/render failure."""
+    if the cap is hit without acceptance; never raises on LLM/render failure.
+
+    "final" is only honored once TWO things hold, both decided in code rather
+    than trusted from the LLM's word alone: every item in the LLM's own
+    checklist is true (see _checklist_passed), AND at least min_rounds
+    visual-critique rounds have happened. A round where the LLM claims
+    "final" before min_rounds is reached is forced back to "revise" --
+    same scad_code, but it gets looked at again rather than accepted on
+    the first glance."""
     system_prompt = _load_prompt()
     artifacts_dir = artifacts_dir or Path("output") / (run_id or "tmp")
 
@@ -144,6 +169,7 @@ def refine(
     last_good_scad: Optional[str] = None
     last_good_png: Optional[bytes] = None
     last_section_9: Optional[dict] = None
+    visual_critique_count = 0
 
     for round_number in range(1, max_rounds + 1):
         render = render_to_png(
@@ -174,7 +200,15 @@ def refine(
         result = _call_llm_visual_critique(
             system_prompt, analysis, current_scad, render.png_bytes, image_bytes, content_type
         )
-        status = result.get("status") if result.get("status") in ("final", "revise") else "revise"
+        visual_critique_count += 1
+        raw_status = result.get("status") if result.get("status") in ("final", "revise") else "revise"
+        checklist = result.get("checklist")
+        checklist_passed = _checklist_passed(checklist)
+        status = (
+            "final"
+            if (raw_status == "final" and checklist_passed and visual_critique_count >= min_rounds)
+            else "revise"
+        )
         last_section_9 = result.get("section_9") or last_section_9
 
         rounds.append(
@@ -185,6 +219,7 @@ def refine(
                 render=render,
                 llm_status=status,
                 notes=result.get("notes"),
+                checklist=checklist,
             )
         )
 
