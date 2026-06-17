@@ -37,10 +37,12 @@ class TestRefineLoop(unittest.TestCase):
         self.image_bytes = b"FAKEJPEG"
         self.content_type = "image/jpeg"
 
+    @patch("generator.render_named_angles")
     @patch("generator.render_to_png")
     @patch("generator._call_llm_visual_critique")
-    def test_immediate_accept(self, mock_critique, mock_render):
+    def test_immediate_accept(self, mock_critique, mock_render, mock_secondary):
         mock_render.return_value = fake_render(True, "code_v0")
+        mock_secondary.return_value = {}
         mock_critique.return_value = {
             "status": "final", "scad_code": "code_v0",
             "checklist": FULL_PASS_CHECKLIST,
@@ -60,14 +62,16 @@ class TestRefineLoop(unittest.TestCase):
             {"note": "ok"},
         )
 
+    @patch("generator.render_named_angles")
     @patch("generator.render_to_png")
     @patch("generator._call_llm_fix_error")
     @patch("generator._call_llm_visual_critique")
-    def test_error_then_fix_then_final(self, mock_critique, mock_fix, mock_render):
+    def test_error_then_fix_then_final(self, mock_critique, mock_fix, mock_render, mock_secondary):
         mock_render.side_effect = [
             fake_render(False, "broken", exit_code=1, stderr="ERROR: parse error"),
             fake_render(True, "fixed_code"),
         ]
+        mock_secondary.return_value = {}
         mock_fix.return_value = {"scad_code": "fixed_code", "notes": "fixed syntax"}
         mock_critique.return_value = {
             "status": "final", "scad_code": "fixed_code",
@@ -86,13 +90,17 @@ class TestRefineLoop(unittest.TestCase):
         self.assertEqual(result.rounds[0].kind, "fix_error")
         self.assertEqual(result.rounds[1].kind, "visual_critique")
 
+    @patch("generator.render_named_angles")
     @patch("generator.render_to_png")
     @patch("generator._call_llm_visual_critique")
-    def test_cap_reached_returns_last_rendered_not_dangling_revision(self, mock_critique, mock_render):
+    def test_cap_reached_returns_last_rendered_not_dangling_revision(
+        self, mock_critique, mock_render, mock_secondary
+    ):
         mock_render.side_effect = [
             fake_render(True, "code_v0"),
             fake_render(True, "code_v1"),
         ]
+        mock_secondary.return_value = {}
         mock_critique.side_effect = [
             {"status": "revise", "scad_code": "code_v1", "section_9": {}, "notes": "tweak prongs"},
             {"status": "revise", "scad_code": "code_v2_never_rendered", "section_9": {}, "notes": "tweak more"},
@@ -118,13 +126,17 @@ class TestRefineLoop(unittest.TestCase):
         self.assertIsNone(result.final_png)
         self.assertEqual(len(result.rounds), 2)
 
+    @patch("generator.render_named_angles")
     @patch("generator.render_to_png")
     @patch("generator._call_llm_visual_critique")
-    def test_missing_checklist_forces_revise_despite_status_final(self, mock_critique, mock_render):
+    def test_missing_checklist_forces_revise_despite_status_final(
+        self, mock_critique, mock_render, mock_secondary
+    ):
         """A bare status:'final' with no checklist must NOT be trusted --
         this is exactly the rubber-stamping pattern that let the floating
         pavé/oversized-halo bugs ship before."""
         mock_render.return_value = fake_render(True, "code_v0")
+        mock_secondary.return_value = {}
         mock_critique.return_value = {
             "status": "final", "scad_code": "code_v0",
             "section_9": {}, "notes": "looks good",
@@ -140,10 +152,12 @@ class TestRefineLoop(unittest.TestCase):
         self.assertEqual(len(result.rounds), 2)
         self.assertTrue(all(r.llm_status == "revise" for r in result.rounds))
 
+    @patch("generator.render_named_angles")
     @patch("generator.render_to_png")
     @patch("generator._call_llm_visual_critique")
-    def test_one_false_checklist_item_forces_revise(self, mock_critique, mock_render):
+    def test_one_false_checklist_item_forces_revise(self, mock_critique, mock_render, mock_secondary):
         mock_render.return_value = fake_render(True, "code_v0")
+        mock_secondary.return_value = {}
         bad_checklist = dict(FULL_PASS_CHECKLIST, prong_count_and_style_matches=False)
         mock_critique.return_value = {
             "status": "final", "scad_code": "code_v0",
@@ -159,12 +173,16 @@ class TestRefineLoop(unittest.TestCase):
         self.assertEqual(result.status, "cap_reached")
         self.assertTrue(all(r.llm_status == "revise" for r in result.rounds))
 
+    @patch("generator.render_named_angles")
     @patch("generator.render_to_png")
     @patch("generator._call_llm_visual_critique")
-    def test_min_rounds_floor_forces_extra_look_before_accepting(self, mock_critique, mock_render):
+    def test_min_rounds_floor_forces_extra_look_before_accepting(
+        self, mock_critique, mock_render, mock_secondary
+    ):
         """Even a fully-passing checklist on round 1 must not finalize
         before min_rounds visual-critique rounds have happened."""
         mock_render.side_effect = [fake_render(True, "code_v0"), fake_render(True, "code_v0")]
+        mock_secondary.return_value = {}
         mock_critique.return_value = {
             "status": "final", "scad_code": "code_v0",
             "checklist": FULL_PASS_CHECKLIST,
@@ -180,6 +198,44 @@ class TestRefineLoop(unittest.TestCase):
         self.assertEqual(len(result.rounds), 2)
         self.assertEqual(result.rounds[0].llm_status, "revise")
         self.assertEqual(result.rounds[1].llm_status, "final")
+
+    @patch("generator.render_named_angles")
+    @patch("generator.render_to_png")
+    @patch("generator._call_llm_visual_critique")
+    def test_angle_images_includes_matching_plus_successful_secondary_only(
+        self, mock_critique, mock_render, mock_secondary
+    ):
+        """The critique call must receive the primary (photo-matching)
+        render plus every secondary angle that actually rendered, and
+        must NOT include angles that failed -- a failed secondary angle
+        is just omitted, not a reason to fail the round."""
+        mock_render.return_value = fake_render(True, "code_v0")
+        mock_secondary.return_value = {
+            "top": fake_render(True, "code_v0"),
+            "front": fake_render(True, "code_v0"),
+            "back": fake_render(False, "code_v0", exit_code=1, stderr="ERROR"),
+            "left": fake_render(True, "code_v0"),
+            "right": fake_render(True, "code_v0"),
+        }
+        mock_critique.return_value = {
+            "status": "final", "scad_code": "code_v0",
+            "checklist": FULL_PASS_CHECKLIST,
+            "section_9": {}, "notes": "looks good",
+        }
+
+        refine(
+            self.analysis, "code_v0", self.image_bytes, self.content_type,
+            max_rounds=3, min_rounds=1,
+        )
+
+        self.assertEqual(mock_critique.call_count, 1)
+        angle_images = mock_critique.call_args[0][3]
+        self.assertIn("matching_photo_angle", angle_images)
+        self.assertIn("top", angle_images)
+        self.assertIn("front", angle_images)
+        self.assertIn("left", angle_images)
+        self.assertIn("right", angle_images)
+        self.assertNotIn("back", angle_images)
 
 
 class TestCallLlmParseResilience(unittest.TestCase):

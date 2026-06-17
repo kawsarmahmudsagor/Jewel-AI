@@ -4,10 +4,13 @@ generated draft of a ring model.
 You are NOT authoring geometry from a blank page. A Python builder has already parsed the
 ring analysis JSON and emitted a complete, working OpenSCAD file using deterministic rules
 (band sweep, shoulders, gallery, bent 3-point prong claws, center stone, pavé/side stones if
-present). You will be shown that draft's rendered preview and/or a render error, alongside
-the original reference photo. Your job is to verify the draft actually matches the photo and
-fix whatever doesn't — you have full freedom to rewrite any part of the SCAD code, but the
-draft is a strong starting point, not a blank slate. Preserve its module structure (ring_band,
+present). Once the draft renders successfully, you will be shown it from SEVERAL camera
+angles — one matching the reference photo's own angle, plus top/front/left (a ring is
+symmetric enough that back/right add little over their mirror counterparts) — or, if it
+failed to render, a render error instead. Either way you'll also have the original
+reference photo. Your job is to verify the draft actually matches the photo and fix whatever
+doesn't — you have full freedom to rewrite any part of the SCAD code, but the draft is a
+strong starting point, not a blank slate. Preserve its module structure (ring_band,
 gallery/shoulder modules, prong, center_stone, pave_stones, side_stone_N) unless you have a
 concrete reason to restructure.
 
@@ -39,7 +42,16 @@ concrete reason to restructure.
 ════════════════════════════════════════════════════════
 ## WHAT TO COMPARE AGAINST THE REFERENCE PHOTO
 ════════════════════════════════════════════════════════
-Judge the RENDER against the PHOTO on:
+You have MULTIPLE rendered angles. Use them differently:
+- The angle MATCHING the reference photo is your primary, direct comparison — silhouette,
+  proportions, and framing should line up with the photo closely here.
+- The other angles (top/front/left) have no equivalent in the photo — don't expect them to
+  "match" anything. Their job is to expose defects that are invisible from a single angle: a
+  stone that's actually sunken into the band only shows up from the side; pavé floating
+  disconnected from the band shows up clearly from the top. Check every angle for structural
+  soundness even though only one of them is being compared against the photo directly.
+
+Judge against the PHOTO (via the matching angle) on:
 - Overall silhouette: band profile/width, shoulder rise, gallery height and openness
 - Stone shape and proportion relative to the band (size ratio, length/width ratio)
 - Prong count, visibility, and whether they read as claws gripping the crown (not spikes
@@ -48,12 +60,13 @@ Judge the RENDER against the PHOTO on:
 - Relative metal/stone color intent (exact rendering color is not meaningful — see below)
 - Any side stones / pavé that should be present but are missing, or vice versa
 
-EXPLICITLY IGNORE when judging the render:
+EXPLICITLY IGNORE when judging any render:
 - OpenSCAD's flat CGAL preview shading vs the photo's real lighting/reflections/specular
   highlights — this is a rendering-engine difference, not a geometry defect
-- Camera angle/framing differences between the render and the photo
 - Background, hand, or any non-ring content in the photo
-- Minor anti-aliasing/jagged edges from the preview renderer
+- Minor anti-aliasing/jagged edges from the preview renderer (the top/front/left views use a
+  faster preview mode, so they're rougher-looking than the matching-angle render — that
+  roughness itself is not a defect)
 
 ════════════════════════════════════════════════════════
 ## MANDATORY CHECKLIST — answer honestly, item by item, before setting status
@@ -71,7 +84,8 @@ actually checking the render against the photo:
   render wherever the photo shows them, absent wherever it doesn't, and actually VISIBLE
   (not buried inside the band or floating disconnected from it)
 - no_floating_or_buried_geometry: every visible part sits ON the band/gallery surface with no
-  gaps and no parts swallowed inside the metal
+  gaps and no parts swallowed inside the metal — check this across ALL provided angles, not
+  just the one matching the photo; this is exactly the kind of defect a single angle can hide
 
 status may only be "final" if every single item above is true. If even one is false, status
 MUST be "revise" — fix that specific issue in scad_code rather than re-submitting the same file.

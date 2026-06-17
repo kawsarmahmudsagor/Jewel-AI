@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 
 from json_utils import parse_llm_json
 from image_utils import encode_image_data_url
-from scad_render import RenderResult, render_to_png
+from scad_render import RenderResult, render_to_png, render_named_angles, photo_matching_camera_eye
 
 load_dotenv()
 
@@ -110,32 +110,48 @@ def _call_llm_fix_error(
     return _call_llm(system_prompt, user_content)
 
 
+_ANGLE_LABELS = {
+    "matching_photo_angle": "RENDERED PREVIEW -- camera angle matching the reference photo (primary comparison)",
+    "top": "RENDERED PREVIEW -- top view",
+    "front": "RENDERED PREVIEW -- front view",
+    "left": "RENDERED PREVIEW -- left view",
+}
+
+
 def _call_llm_visual_critique(
     system_prompt: str,
     analysis: dict,
     scad_code: str,
-    render_png: bytes,
+    angle_images: dict[str, bytes],
     image_bytes: bytes,
     content_type: str,
 ) -> dict:
-    render_url = encode_image_data_url(render_png, "image/png")
     photo_url = encode_image_data_url(image_bytes, content_type)
     user_content = [
         {
             "type": "text",
             "text": (
-                "The procedurally-generated OpenSCAD draft below rendered successfully. Compare "
-                "the RENDERED PREVIEW against the REFERENCE PHOTO and decide whether it is "
-                "faithful enough to ship, or needs revision.\n\n"
+                "The procedurally-generated OpenSCAD draft below rendered successfully. You are "
+                "shown it from multiple camera angles -- one matching the reference photo's own "
+                "angle (the primary comparison) plus top/front/left for additional coverage (a "
+                "ring is symmetric enough that back/right add little over their mirror "
+                "counterparts), since some defects (floating geometry, a stone buried in the "
+                "band, asymmetric prongs) are invisible from a single angle. Compare all of them "
+                "against the REFERENCE PHOTO and decide whether the draft is faithful enough to "
+                "ship, or needs revision.\n\n"
                 f"DRAFT SCAD CODE:\n{scad_code}\n\n"
                 f"RING ANALYSIS JSON:\n{json.dumps(analysis, indent=2)}"
             ),
         },
-        {"type": "text", "text": "RENDERED PREVIEW (from the draft SCAD):"},
-        {"type": "image_url", "image_url": {"url": render_url}},
-        {"type": "text", "text": "REFERENCE PHOTO (ground truth):"},
-        {"type": "image_url", "image_url": {"url": photo_url}},
     ]
+    for name, png_bytes in angle_images.items():
+        label = _ANGLE_LABELS.get(name, f"RENDERED PREVIEW -- {name} view")
+        user_content.append({"type": "text", "text": f"{label}:"})
+        user_content.append(
+            {"type": "image_url", "image_url": {"url": encode_image_data_url(png_bytes, "image/png")}}
+        )
+    user_content.append({"type": "text", "text": "REFERENCE PHOTO (ground truth):"})
+    user_content.append({"type": "image_url", "image_url": {"url": photo_url}})
     return _call_llm(system_prompt, user_content)
 
 
@@ -163,6 +179,8 @@ def refine(
     the first glance."""
     system_prompt = _load_prompt()
     artifacts_dir = artifacts_dir or Path("output") / (run_id or "tmp")
+    photo_context = analysis.get("photoContext") if isinstance(analysis, dict) else None
+    matching_eye = photo_matching_camera_eye(photo_context)
 
     current_scad = procedural_scad
     rounds: list[RoundLog] = []
@@ -173,7 +191,10 @@ def refine(
 
     for round_number in range(1, max_rounds + 1):
         render = render_to_png(
-            current_scad, workdir=artifacts_dir, basename=f"round_{round_number}"
+            current_scad,
+            workdir=artifacts_dir,
+            basename=f"round_{round_number}",
+            camera_eye=matching_eye,
         )
 
         if not render.success:
@@ -197,8 +218,16 @@ def refine(
         last_good_scad = current_scad
         last_good_png = render.png_bytes
 
+        secondary_renders = render_named_angles(
+            current_scad, workdir=artifacts_dir, basename_prefix=f"round_{round_number}"
+        )
+        angle_images = {"matching_photo_angle": render.png_bytes}
+        for name, secondary in secondary_renders.items():
+            if secondary.success and secondary.png_bytes:
+                angle_images[name] = secondary.png_bytes
+
         result = _call_llm_visual_critique(
-            system_prompt, analysis, current_scad, render.png_bytes, image_bytes, content_type
+            system_prompt, analysis, current_scad, angle_images, image_bytes, content_type
         )
         visual_critique_count += 1
         raw_status = result.get("status") if result.get("status") in ("final", "revise") else "revise"

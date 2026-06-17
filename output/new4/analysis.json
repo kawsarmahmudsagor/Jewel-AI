@@ -1,0 +1,463 @@
+{
+  "expertAnalysisQuestionnaire": {
+    "sections": {
+      "1_generalComponentAnalysis": {
+        "title": "General Component Analysis",
+        "perComponent": {
+          "name": "Center Gemstone",
+          "type": "Gemstone",
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 4.1
+          },
+          "rotation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 45.0
+          },
+          "dimensions": {
+            "radius": null,
+            "diameter": null,
+            "width": 6.0,
+            "height": 4.0,
+            "depth": 4.0,
+            "thickness": null
+          },
+          "shapeClassification": "Emerald",
+          "styleClassification": "Step Cut",
+          "parentComponent": "Gallery Head Assembly",
+          "childComponents": [],
+          "relationships": [
+            "Held by four corner prongs",
+            "Surrounded by a rectangular halo"
+          ],
+          "confidenceScore": 0.95
+        }
+      },
+      "2_ringBandAnalysis": {
+        "title": "Ring Band Analysis",
+        "ringParameters": {
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": -8.25
+          },
+          "orientation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "primarySymmetryAxis": "Y",
+          "innerRadius": 8.25,
+          "innerDiameter": 16.5,
+          "estimatedFingerSize": "6"
+        },
+        "bandGeometry": {
+          "widthAtBottomShank": 2.2,
+          "widthAtShoulder": 4.8,
+          "widthNearCenterSetting": 5.2,
+          "thicknessAtBottomShank": 1.6,
+          "thicknessAtShoulder": 1.8,
+          "thicknessAtSplitRegion": 1.7,
+          "bandConfiguration": {
+            "type": "Split Shank",
+            "options": [
+              "Single Shank",
+              "Split Shank",
+              "Double Band",
+              "Triple Band",
+              "Bypass",
+              "Twisted",
+              "Infinity",
+              "Other"
+            ]
+          },
+          "isSymmetrical": true,
+          "crossSectionalShape": {
+            "type": "Half Round",
+            "options": [
+              "Round",
+              "Comfort Fit",
+              "Half Round",
+              "Flat",
+              "Knife Edge",
+              "Custom"
+            ]
+          },
+          "taperProfile": "Flared towards head",
+          "edgeFilletRadius": 0.2
+        },
+        "curvedGeometryAnalysis": {
+          "containsCurves": true,
+          "containsWaves": false,
+          "containsTwists": false,
+          "containsOrganicGeometry": false,
+          "majorCurveCount": 2,
+          "curves": [
+            {
+              "startPosition": {
+                "x": -5.0,
+                "y": 0.0,
+                "z": -3.0
+              },
+              "endPosition": {
+                "x": -2.5,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "radius": 12.0,
+              "angle": 35.0,
+              "controlPoints": []
+            }
+          ]
+        }
+      },
+      "3_bandTypeAnalysis": {
+        "title": "Band Type Analysis",
+        "mandatory": true,
+        "bandStyleClassification": {
+          "overallStyle": "Split Shank",
+          "options": [
+            "Single Shank",
+            "Split Shank",
+            "Cathedral",
+            "Infinity",
+            "Twisted",
+            "Bypass",
+            "Custom"
+          ]
+        },
+        "splitShankAnalysis": {
+          "isPresent": true,
+          "isSymmetrical": true,
+          "armsPerSide": 2,
+          "totalArms": 4,
+          "splitStartPosition": {
+            "x": -6.5,
+            "y": 0.0,
+            "z": -4.0
+          },
+          "splitEndPosition": {
+            "x": -2.6,
+            "y": 0.0,
+            "z": 0.5
+          },
+          "armWidth": 1.6,
+          "armThickness": 1.5,
+          "armSeparationDistance": 1.8,
+          "armCurvatureRadius": 14.0,
+          "armTaperRatio": 1.0,
+          "armOrientation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 15.0
+          },
+          "armMergePointAtCenterSetting": "Sides of the halo frame"
+        },
+        "shoulderAnalysis": {
+          "style": {
+            "type": "Split",
+            "options": [
+              "Cathedral",
+              "Split",
+              "Straight",
+              "Bypass",
+              "Tapered"
+            ]
+          },
+          "width": 4.8,
+          "height": 2.0,
+          "thickness": 1.8,
+          "curvature": 0.15
+        },
+        "decorativeFeatures": {
+          "pave": true,
+          "engraving": false,
+          "milgrain": false,
+          "filigree": false,
+          "texture": false,
+          "channel": false,
+          "none": false
+        },
+        "decorativeFeatureDetails": {
+          "milgrain": {
+            "isPresent": false,
+            "beadDiameter": null,
+            "spacing": null
+          },
+          "filigree": {
+            "isPresent": false,
+            "wireThickness": null,
+            "loopCount": null
+          },
+          "channel": {
+            "isPresent": false,
+            "stoneCount": null,
+            "stoneDiameter": null,
+            "startAngleFromHeadDegrees": null,
+            "endAngleFromHeadDegrees": null
+          }
+        },
+        "bandSummary": {
+          "finalStyleClassification": "Split Shank Pav\u00e9",
+          "totalBandArms": 4,
+          "shankConfiguration": "Split Shank",
+          "crossSection": "Half Round",
+          "overallWidth": 5.2,
+          "overallThickness": 1.8,
+          "shoulderDesign": "Split",
+          "decorativeFeaturesPresent": [
+            "Pav\u00e9"
+          ],
+          "integrationWithCenterSetting": "Integrated into the base of the halo",
+          "confidenceScore": 0.95
+        }
+      },
+      "4_paveAccentStoneAnalysis": {
+        "title": "Pav\u00e9 / Accent Stone Analysis",
+        "isPresent": true,
+        "locations": [
+          "Split shank arms",
+          "Halo frame"
+        ],
+        "distributionPattern": "Dual rows on split shank, single row on halo",
+        "averageStoneDiameter": 1.1,
+        "averageStoneRadius": 0.55,
+        "totalStoneCount": 56,
+        "settingStyle": {
+          "type": "Micro Pav\u00e9",
+          "options": [
+            "Micro Pav\u00e9",
+            "Bead",
+            "Prong",
+            "Flush",
+            "Channel"
+          ]
+        },
+        "arrangementPattern": {
+          "type": "Single Row",
+          "options": [
+            "Single Row",
+            "Double Row",
+            "Triple Row",
+            "Scattered"
+          ]
+        },
+        "stones": [
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 15.0,
+              "lateralOffsetDegrees": 10.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Micro Pav\u00e9"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 25.0,
+              "lateralOffsetDegrees": 12.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Micro Pav\u00e9"
+          }
+        ]
+      },
+      "5_centerStoneAnalysis": {
+        "title": "Center Stone Analysis",
+        "geometry": {
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 4.1
+          },
+          "width": 6.0,
+          "length": 8.0,
+          "depth": 4.0,
+          "diameter": null,
+          "shape": {
+            "type": "Emerald",
+            "options": [
+              "Round",
+              "Oval",
+              "Cushion",
+              "Emerald",
+              "Pear",
+              "Princess",
+              "Marquise",
+              "Heart",
+              "Radiant"
+            ]
+          },
+          "orientationAngle": 0.0,
+          "elevationAboveBand": 4.1,
+          "tableDirection": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "estimatedCutStyle": "Step Cut"
+        },
+        "setting": {
+          "type": {
+            "value": "Halo",
+            "options": [
+              "Prong",
+              "Basket",
+              "Cathedral",
+              "Halo",
+              "Bezel",
+              "Peg Head",
+              "Trellis"
+            ]
+          },
+          "prongCount": 4,
+          "prongHeight": 1.5,
+          "prongThickness": 0.8,
+          "prongShape": "Claw",
+          "prongAngularPositions": [
+            45,
+            135,
+            225,
+            315
+          ],
+          "decorativeSettingElementsPresent": "Under-gallery support bars",
+          "relationshipToGalleryHead": "Prongs integrated into the inner wall of the halo frame"
+        }
+      },
+      "6_sideStoneAnalysis": {
+        "title": "Side Stone Analysis",
+        "isPresent": false,
+        "totalCount": 0,
+        "stones": []
+      },
+      "7_galleryHeadAssemblyAnalysis": {
+        "title": "Gallery / Head Assembly Analysis",
+        "galleryGeometry": {
+          "isPresent": true,
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 2.5
+          },
+          "width": 9.5,
+          "height": 4.5,
+          "depth": 11.5,
+          "style": {
+            "type": "Halo",
+            "options": [
+              "Basket",
+              "Cathedral",
+              "Trellis",
+              "Peg Head",
+              "Halo",
+              "Custom"
+            ]
+          }
+        },
+        "haloAnalysis": {
+          "isPresent": true,
+          "stoneCount": 24,
+          "stoneDiameter": 1.1,
+          "radialOffsetFromGirdle": 0.6,
+          "heightOffsetFromGirdle": -0.2
+        },
+        "galleryComponents": {
+          "shouldersPresent": true,
+          "railsPresent": true,
+          "bridgesOrSupportBarsPresent": true,
+          "bridgeOrSupportBarCount": 4,
+          "supportRingPresent": true,
+          "decorativeElements": {
+            "filigree": false,
+            "scroll": false,
+            "lattice": false,
+            "openwork": true
+          }
+        },
+        "galleryStoneAnalysis": {
+          "stonesPresent": true,
+          "stoneCount": 24,
+          "stoneSizes": [
+            1.1
+          ],
+          "stoneShapes": [
+            "Round"
+          ],
+          "settingStyle": "Micro Pav\u00e9"
+        }
+      },
+      "8_componentRelationshipMapping": {
+        "title": "Component Relationship Mapping",
+        "perComponent": {
+          "componentName": "Halo Frame",
+          "parentComponent": "Gallery Head Assembly",
+          "childComponents": [
+            "Halo Accent Stones",
+            "Center Stone Prongs"
+          ],
+          "attachedTo": "Split Shank Shoulders",
+          "supports": "Center Stone",
+          "supportedBy": "Gallery Support Pillars",
+          "directConnections": [
+            "Shank Arms",
+            "Prongs"
+          ]
+        },
+        "keyRelationships": {
+          "bandSupportsGallery": true,
+          "gallerySupportscenterStone": true,
+          "prongsHoldCenterStone": true,
+          "splitArmsMergeIntoHeadAssembly": true
+        }
+      },
+      "9_cadReconstructionParameters": {
+        "band_style": "Split Shank",
+        "center_stone_shape": "Emerald",
+        "prong_style": "Claw",
+        "prong_count": 4,
+        "halo_present": true,
+        "pave_present": true
+      }
+    }
+  },
+  "photoContext": {
+    "viewAngle": "three_quarter",
+    "estimatedTiltDegrees": 45,
+    "reliableDimensions": [
+      "width",
+      "height"
+    ],
+    "visibleComponents": [
+      "Center Stone",
+      "Halo Frame",
+      "Prongs",
+      "Split Shank",
+      "Pav\u00e9 Stones"
+    ],
+    "partiallyVisibleComponents": [
+      "Under-gallery",
+      "Inner Shank"
+    ],
+    "hiddenComponents": [
+      "Bottom of Shank"
+    ]
+  },
+  "assemblyStack": {
+    "bandTopZ": 0,
+    "bandBottomZ": 0,
+    "galleryBaseZ": 0,
+    "galleryTopZ": 3.5,
+    "stoneGirdleZ": 3.5,
+    "stoneTableZ": 4.5,
+    "prongTipZ": 4.8,
+    "haloPlaneZ": 3.3
+  },
+  "gemstoneColor": {
+    "colorName": "Swiss Blue Topaz",
+    "colorHex": "#3B9EC6",
+    "transparency": "Transparent"
+  }
+}

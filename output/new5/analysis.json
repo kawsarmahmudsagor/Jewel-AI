@@ -1,0 +1,480 @@
+{
+  "expertAnalysisQuestionnaire": {
+    "sections": {
+      "1_generalComponentAnalysis": {
+        "title": "General Component Analysis",
+        "perComponent": {
+          "name": "Triple-Row Milgrain Accent Band with Six-Prong Solitaire Head",
+          "type": "Ring Assembly",
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "rotation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "dimensions": {
+            "radius": 10.25,
+            "diameter": 20.5,
+            "width": 5.2,
+            "height": 24.5,
+            "depth": 20.5,
+            "thickness": 2.0
+          },
+          "shapeClassification": "Round",
+          "styleClassification": "Classic Pav\u00e9 / Vintage-Inspired",
+          "parentComponent": null,
+          "childComponents": [
+            "Ring Band",
+            "Center Setting Head",
+            "Center Gemstone",
+            "Pav\u00e9 Accent Stones"
+          ],
+          "relationships": [],
+          "confidenceScore": 0.95
+        }
+      },
+      "2_ringBandAnalysis": {
+        "title": "Ring Band Analysis",
+        "ringParameters": {
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 0.0
+          },
+          "orientation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "primarySymmetryAxis": "Y",
+          "innerRadius": 8.25,
+          "innerDiameter": 16.5,
+          "estimatedFingerSize": 6.0
+        },
+        "bandGeometry": {
+          "widthAtBottomShank": 3.2,
+          "widthAtShoulder": 5.2,
+          "widthNearCenterSetting": 5.2,
+          "thicknessAtBottomShank": 1.7,
+          "thicknessAtShoulder": 2.2,
+          "thicknessAtSplitRegion": null,
+          "bandConfiguration": {
+            "type": "Single Shank"
+          },
+          "isSymmetrical": true,
+          "crossSectionalShape": {
+            "type": "Comfort Fit"
+          },
+          "taperProfile": "Slightly tapered from shoulder to bottom shank",
+          "edgeFilletRadius": 0.3
+        },
+        "curvedGeometryAnalysis": {
+          "containsCurves": true,
+          "containsWaves": false,
+          "containsTwists": false,
+          "containsOrganicGeometry": false,
+          "majorCurveCount": 1,
+          "curves": [
+            {
+              "startPosition": {
+                "x": -10.25,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "endPosition": {
+                "x": 10.25,
+                "y": 0.0,
+                "z": 0.0
+              },
+              "radius": 10.25,
+              "angle": 360.0,
+              "controlPoints": []
+            }
+          ]
+        }
+      },
+      "3_bandTypeAnalysis": {
+        "title": "Band Type Analysis",
+        "mandatory": true,
+        "bandStyleClassification": {
+          "overallStyle": "Single Shank"
+        },
+        "splitShankAnalysis": {
+          "isPresent": false,
+          "isSymmetrical": null,
+          "armsPerSide": null,
+          "totalArms": null,
+          "splitStartPosition": null,
+          "splitEndPosition": null,
+          "armWidth": null,
+          "armThickness": null,
+          "armSeparationDistance": null,
+          "armCurvatureRadius": null,
+          "armTaperRatio": null,
+          "armOrientation": null,
+          "armMergePointAtCenterSetting": null
+        },
+        "shoulderAnalysis": {
+          "style": {
+            "type": "Straight"
+          },
+          "width": 5.2,
+          "height": 2.2,
+          "thickness": 2.2,
+          "curvature": 10.25
+        },
+        "decorativeFeatures": {
+          "pave": true,
+          "engraving": false,
+          "milgrain": true,
+          "filigree": true,
+          "texture": false,
+          "channel": false,
+          "none": false
+        },
+        "decorativeFeatureDetails": {
+          "milgrain": {
+            "isPresent": true,
+            "beadDiameter": 0.35,
+            "spacing": 0.45
+          },
+          "filigree": {
+            "isPresent": true,
+            "wireThickness": 0.4,
+            "loopCount": 4
+          },
+          "channel": {
+            "isPresent": false,
+            "stoneCount": null,
+            "stoneDiameter": null,
+            "startAngleFromHeadDegrees": null,
+            "endAngleFromHeadDegrees": null
+          }
+        },
+        "bandSummary": {
+          "finalStyleClassification": "Triple-Row Pav\u00e9 with Milgrain Borders",
+          "totalBandArms": 1,
+          "shankConfiguration": "Single Shank",
+          "crossSection": "Comfort Fit",
+          "overallWidth": 5.2,
+          "overallThickness": 2.2,
+          "shoulderDesign": "Straight wide shoulder",
+          "decorativeFeaturesPresent": [
+            "Pav\u00e9",
+            "Milgrain",
+            "Under-gallery Filigree"
+          ],
+          "integrationWithCenterSetting": "Peg Head style resting on flat top of band",
+          "confidenceScore": 0.95
+        }
+      },
+      "4_paveAccentStoneAnalysis": {
+        "title": "Pav\u00e9 / Accent Stone Analysis",
+        "isPresent": true,
+        "locations": [
+          "Left Shoulder",
+          "Right Shoulder"
+        ],
+        "distributionPattern": "Triple Row",
+        "averageStoneDiameter": 1.1,
+        "averageStoneRadius": 0.55,
+        "totalStoneCount": 66,
+        "settingStyle": {
+          "type": "Bead"
+        },
+        "arrangementPattern": {
+          "type": "Triple Row"
+        },
+        "stones": [
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 12.0,
+              "lateralOffsetDegrees": -15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 12.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 12.0,
+              "lateralOffsetDegrees": 15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 18.0,
+              "lateralOffsetDegrees": -15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 18.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 18.0,
+              "lateralOffsetDegrees": 15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 24.0,
+              "lateralOffsetDegrees": -15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 24.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 24.0,
+              "lateralOffsetDegrees": 15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 30.0,
+              "lateralOffsetDegrees": -15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 30.0,
+              "lateralOffsetDegrees": 0.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          },
+          {
+            "bandPosition": {
+              "angleFromHeadDegrees": 30.0,
+              "lateralOffsetDegrees": 15.0,
+              "heightAboveBandSurface": 0.1
+            },
+            "diameter": 1.1,
+            "settingType": "Bead"
+          }
+        ]
+      },
+      "5_centerStoneAnalysis": {
+        "title": "Center Stone Analysis",
+        "geometry": {
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 4.2
+          },
+          "width": 7.5,
+          "length": 7.5,
+          "depth": 4.6,
+          "diameter": 7.5,
+          "shape": {
+            "type": "Round"
+          },
+          "orientationAngle": 0.0,
+          "elevationAboveBand": 4.2,
+          "tableDirection": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "estimatedCutStyle": "Round Brilliant"
+        },
+        "setting": {
+          "type": {
+            "value": "Peg Head",
+            "options": [
+              "Prong",
+              "Basket",
+              "Cathedral",
+              "Halo",
+              "Bezel",
+              "Peg Head",
+              "Trellis"
+            ]
+          },
+          "prongCount": 6,
+          "prongHeight": 5.8,
+          "prongThickness": 0.9,
+          "prongShape": "Claw",
+          "prongAngularPositions": [
+            30,
+            90,
+            150,
+            210,
+            270,
+            330
+          ],
+          "decorativeSettingElementsPresent": "Milgrain-edged petal filigree under-gallery",
+          "relationshipToGalleryHead": "Integrated into the 6-prong peg head basket"
+        }
+      },
+      "6_sideStoneAnalysis": {
+        "title": "Side Stone Analysis",
+        "isPresent": false,
+        "totalCount": 0,
+        "stones": []
+      },
+      "7_galleryHeadAssemblyAnalysis": {
+        "title": "Gallery / Head Assembly Analysis",
+        "galleryGeometry": {
+          "isPresent": true,
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 2.1
+          },
+          "width": 7.8,
+          "height": 4.2,
+          "depth": 7.8,
+          "style": {
+            "type": "Basket"
+          }
+        },
+        "haloAnalysis": {
+          "isPresent": false,
+          "stoneCount": null,
+          "stoneDiameter": null,
+          "radialOffsetFromGirdle": null,
+          "heightOffsetFromGirdle": null
+        },
+        "galleryComponents": {
+          "shouldersPresent": false,
+          "railsPresent": true,
+          "bridgesOrSupportBarsPresent": true,
+          "bridgeOrSupportBarCount": 6,
+          "supportRingPresent": true,
+          "decorativeElements": {
+            "filigree": true,
+            "scroll": true,
+            "lattice": false,
+            "openwork": true
+          }
+        },
+        "galleryStoneAnalysis": {
+          "stonesPresent": false,
+          "stoneCount": 0,
+          "stoneSizes": [],
+          "stoneShapes": [],
+          "settingStyle": null
+        }
+      },
+      "8_componentRelationshipMapping": {
+        "title": "Component Relationship Mapping",
+        "perComponent": {
+          "componentName": "Center Setting Head",
+          "parentComponent": "Ring Band",
+          "childComponents": [
+            "Center Gemstone"
+          ],
+          "attachedTo": "Ring Band",
+          "supports": "Center Gemstone",
+          "supportedBy": "Ring Band",
+          "directConnections": [
+            "Ring Band",
+            "Center Gemstone"
+          ]
+        },
+        "keyRelationships": {
+          "bandSupportsGallery": true,
+          "gallerySupportscenterStone": true,
+          "prongsHoldCenterStone": true,
+          "splitArmsMergeIntoHeadAssembly": false
+        }
+      },
+      "9_cadReconstructionParameters": {
+        "brandStyle": "Vintage-Inspired Solitaire",
+        "band": {
+          "type": "Triple-Row Pav\u00e9 with Milgrain",
+          "innerRadius": 8.25,
+          "outerRadius": 10.44,
+          "width": 5.2
+        },
+        "centerStone": {
+          "shape": "Round",
+          "radius": 3.75,
+          "setting": "6-Prong Claw"
+        }
+      }
+    }
+  },
+  "photoContext": {
+    "viewAngle": "three_quarter",
+    "estimatedTiltDegrees": 45,
+    "reliableDimensions": [
+      "width",
+      "depth"
+    ],
+    "visibleComponents": [
+      "center stone",
+      "prongs",
+      "band",
+      "pav\u00e9 stones",
+      "milgrain borders",
+      "under-gallery filigree"
+    ],
+    "partiallyVisibleComponents": [
+      "inner shank pierce-outs"
+    ],
+    "hiddenComponents": []
+  },
+  "assemblyStack": {
+    "bandTopZ": 0,
+    "bandBottomZ": -0.4,
+    "galleryBaseZ": 0.2,
+    "galleryTopZ": 4.2,
+    "stoneGirdleZ": 4.2,
+    "stoneTableZ": 5.4,
+    "prongTipZ": 5.7,
+    "haloPlaneZ": null
+  },
+  "gemstoneColor": {
+    "colorName": "Colorless",
+    "colorHex": "#E8F4FF",
+    "transparency": "Transparent"
+  }
+}
