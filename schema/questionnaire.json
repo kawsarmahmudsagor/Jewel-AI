@@ -1,0 +1,309 @@
+{
+  "expertAnalysisQuestionnaire": {
+    "sections": {
+      "1_generalComponentAnalysis": {
+        "title": "General Component Analysis",
+        "perComponent": {
+          "name": null,
+          "type": null,
+          "position": { "x": null, "y": null, "z": null },
+          "rotation": { "rx": null, "ry": null, "rz": null },
+          "dimensions": {
+            "radius": null,
+            "diameter": null,
+            "width": null,
+            "height": null,
+            "depth": null,
+            "thickness": null
+          },
+          "shapeClassification": null,
+          "styleClassification": null,
+          "parentComponent": null,
+          "childComponents": [],
+          "relationships": [],
+          "confidenceScore": null
+        }
+      },
+
+      "2_ringBandAnalysis": {
+        "title": "Ring Band Analysis",
+        "ringParameters": {
+          "centerPosition": { "x": null, "y": null, "z": null },
+          "orientation": { "rx": null, "ry": null, "rz": null },
+          "primarySymmetryAxis": null,
+          "innerRadius": null,
+          "innerDiameter": null,
+          "estimatedFingerSize": null
+        },
+        "bandGeometry": {
+          "widthAtBottomShank": null,
+          "widthAtShoulder": null,
+          "widthNearCenterSetting": null,
+          "thicknessAtBottomShank": null,
+          "thicknessAtShoulder": null,
+          "thicknessAtSplitRegion": null,
+          "bandConfiguration": {
+            "type": null,
+            "options": [
+              "Single Shank", "Split Shank", "Double Band",
+              "Triple Band", "Bypass", "Twisted", "Infinity", "Other"
+            ]
+          },
+          "isSymmetrical": null,
+          "crossSectionalShape": {
+            "type": null,
+            "options": ["Round", "Comfort Fit", "Half Round", "Flat", "Knife Edge", "Custom"]
+          },
+          "taperProfile": null,
+          "edgeFilletRadius": null
+        },
+        "curvedGeometryAnalysis": {
+          "containsCurves": null,
+          "containsWaves": null,
+          "containsTwists": null,
+          "containsOrganicGeometry": null,
+          "majorCurveCount": null,
+          "curves": [
+            {
+              "startPosition": { "x": null, "y": null, "z": null },
+              "endPosition": { "x": null, "y": null, "z": null },
+              "radius": null,
+              "angle": null,
+              "controlPoints": []
+            }
+          ]
+        }
+      },
+
+      "3_bandTypeAnalysis": {
+        "title": "Band Type Analysis",
+        "mandatory": true,
+        "bandStyleClassification": {
+          "overallStyle": null,
+          "options": [
+            "Single Shank", "Split Shank", "Cathedral",
+            "Infinity", "Twisted", "Bypass", "Custom"
+          ]
+        },
+        "splitShankAnalysis": {
+          "isPresent": null,
+          "isSymmetrical": null,
+          "armsPerSide": null,
+          "totalArms": null,
+          "splitStartPosition": { "x": null, "y": null, "z": null },
+          "splitEndPosition": { "x": null, "y": null, "z": null },
+          "armWidth": null,
+          "armThickness": null,
+          "armSeparationDistance": null,
+          "armCurvatureRadius": null,
+          "armTaperRatio": null,
+          "armOrientation": { "rx": null, "ry": null, "rz": null },
+          "armMergePointAtCenterSetting": null
+        },
+        "shoulderAnalysis": {
+          "style": {
+            "type": null,
+            "options": ["Cathedral", "Split", "Straight", "Bypass", "Tapered"]
+          },
+          "width": null,
+          "height": null,
+          "thickness": null,
+          "curvature": null
+        },
+        "decorativeFeatures": {
+          "pave": null,
+          "engraving": null,
+          "milgrain": null,
+          "filigree": null,
+          "texture": null,
+          "channel": null,
+          "none": null
+        },
+        "bandSummary": {
+          "finalStyleClassification": null,
+          "totalBandArms": null,
+          "shankConfiguration": null,
+          "crossSection": null,
+          "overallWidth": null,
+          "overallThickness": null,
+          "shoulderDesign": null,
+          "decorativeFeaturesPresent": [],
+          "integrationWithCenterSetting": null,
+          "confidenceScore": null
+        }
+      },
+
+      "4_paveAccentStoneAnalysis": {
+        "title": "Pavé / Accent Stone Analysis",
+        "isPresent": null,
+        "locations": [],
+        "distributionPattern": null,
+        "averageStoneDiameter": null,
+        "averageStoneRadius": null,
+        "totalStoneCount": null,
+        "settingStyle": {
+          "type": null,
+          "options": ["Micro Pavé", "Bead", "Prong", "Flush", "Channel"]
+        },
+        "arrangementPattern": {
+          "type": null,
+          "options": ["Single Row", "Double Row", "Triple Row", "Scattered"]
+        },
+        "stones": [
+          {
+            "position": { "x": null, "y": null, "z": null },
+            "diameter": null,
+            "settingType": null
+          }
+        ]
+      },
+
+      "5_centerStoneAnalysis": {
+        "title": "Center Stone Analysis",
+        "geometry": {
+          "position": { "x": null, "y": null, "z": null },
+          "width": null,
+          "length": null,
+          "depth": null,
+          "diameter": null,
+          "shape": {
+            "type": null,
+            "options": [
+              "Round", "Oval", "Cushion", "Emerald", "Pear",
+              "Princess", "Marquise", "Heart", "Radiant"
+            ]
+          },
+          "orientationAngle": null,
+          "elevationAboveBand": null,
+          "tableDirection": null,
+          "estimatedCutStyle": null
+        },
+        "setting": {
+          "type": {
+            "value": null,
+            "options": [
+              "Prong", "Basket", "Cathedral", "Halo",
+              "Bezel", "Peg Head", "Trellis"
+            ]
+          },
+          "prongCount": null,
+          "prongHeight": null,
+          "prongThickness": null,
+          "prongShape": null,
+          "prongAngularPositions": [],
+          "decorativeSettingElementsPresent": null,
+          "relationshipToGalleryHead": null
+        }
+      },
+
+      "6_sideStoneAnalysis": {
+        "title": "Side Stone Analysis",
+        "isPresent": null,
+        "totalCount": null,
+        "stones": [
+          {
+            "position": { "x": null, "y": null, "z": null },
+            "dimensions": {
+              "width": null,
+              "length": null,
+              "depth": null
+            },
+            "shape": null,
+            "settingStyle": null,
+            "prongCount": null,
+            "prongPositions": [],
+            "isSymmetrical": null,
+            "integration": {
+              "type": null,
+              "options": ["Band", "Gallery", "Halo"]
+            }
+          }
+        ]
+      },
+
+      "7_galleryHeadAssemblyAnalysis": {
+        "title": "Gallery / Head Assembly Analysis",
+        "galleryGeometry": {
+          "isPresent": null,
+          "centerPosition": { "x": null, "y": null, "z": null },
+          "width": null,
+          "height": null,
+          "depth": null,
+          "style": {
+            "type": null,
+            "options": ["Basket", "Cathedral", "Trellis", "Peg Head", "Halo", "Custom"]
+          }
+        },
+        "galleryComponents": {
+          "shouldersPresent": null,
+          "railsPresent": null,
+          "bridgesOrSupportBarsPresent": null,
+          "bridgeOrSupportBarCount": null,
+          "supportRingPresent": null,
+          "decorativeElements": {
+            "filigree": null,
+            "scroll": null,
+            "lattice": null,
+            "openwork": null
+          }
+        },
+        "galleryStoneAnalysis": {
+          "stonesPresent": null,
+          "stoneCount": null,
+          "stoneSizes": [],
+          "stoneShapes": [],
+          "settingStyle": null
+        }
+      },
+
+      "8_componentRelationshipMapping": {
+        "title": "Component Relationship Mapping",
+        "perComponent": {
+          "componentName": null,
+          "parentComponent": null,
+          "childComponents": [],
+          "attachedTo": null,
+          "supports": null,
+          "supportedBy": null,
+          "directConnections": []
+        },
+        "keyRelationships": {
+          "bandSupportsGallery": null,
+          "gallerySupportscenterStone": null,
+          "prongsHoldCenterStone": null,
+          "splitArmsMergeIntoHeadAssembly": null
+        }
+      },
+
+      "9_cadReconstructionParameters": {
+        "title": "CAD Reconstruction Parameters",
+        "perComponent": {
+          "componentName": null,
+          "position": { "x": null, "y": null, "z": null },
+          "rotation": { "rx": null, "ry": null, "rz": null },
+          "dimensions": {
+            "width": null,
+            "height": null,
+            "depth": null,
+            "radius": null,
+            "diameter": null,
+            "thickness": null
+          },
+          "shapeClassification": null,
+          "styleClassification": null,
+          "settingType": null,
+          "parentComponent": null,
+          "childComponents": [],
+          "confidenceScore": null,
+          "proceduralCADParameters": {
+            "targetSoftware": "OpenSCAD",
+            "primitives": [],
+            "booleanOperations": [],
+            "transformations": [],
+            "customParameters": {}
+          }
+        }
+      }
+    }
+  }
+}
