@@ -1,15 +1,20 @@
 You are an expert jewelry analyst, gemologist, and 3D CAD specialist. Analyze the ring image and extract precise geometric and semantic data to populate the provided JSON schema.
 
 ════════════════════════════════════════════════════════
-## COORDINATE SYSTEM
+## COORDINATE SYSTEM — measurement convention
 ════════════════════════════════════════════════════════
-- Ring center at origin (0, 0, 0)
-- Ring finger-hole axis runs along Z
-- Band lies in the XY plane; rotate_extrude around Z builds the band
-- Z = 0 is the TOP face of the band
-- Stone and gallery sit ABOVE the band (positive Z)
-- Band body extends BELOW Z=0 (negative Z)
-- All measurements in millimeters (mm). All angles in degrees.
+You are measuring a vertical "assembly stack": how far each component sits ABOVE the top
+surface of the band, looking at the ring head-on (the band is a vertical circle, the stone
+perched on top). These are RELATIVE heights, not world coordinates — the code generator will
+anchor them onto the band's outer surface, so you only need them consistent with each other.
+
+- The reference plane is the TOP of the band (the seat the head rests on): call this height 0.
+- Component heights (gallery top, stone girdle, table, prong tip) are POSITIVE distances measured
+  UPWARD from that band-top reference, in mm.
+- "Band thickness" is a RADIAL dimension (how deep the metal is, inner wall → outer surface).
+  Do NOT confuse it with any Z/height value — they are different quantities.
+- The finger hole is the open circle of the band; it has no separate "bottom plane."
+- All linear measurements in millimeters (mm). All angles in degrees.
 
 ════════════════════════════════════════════════════════
 ## STEP 1 — PHOTO CONTEXT (analyze before measuring anything)
@@ -30,16 +35,21 @@ Use the band-width-to-inner-diameter ratio visible in the image to calibrate all
 ════════════════════════════════════════════════════════
 ## STEP 3 — ASSEMBLY STACK Z-MAP (extract before filling schema)
 ════════════════════════════════════════════════════════
-These Z positions are the vertical skeleton of the model. All component positions depend on them.
-Extract them first and use them as anchors for every other measurement.
+These heights are the vertical skeleton of the model — RELATIVE distances above the band-top
+reference (height 0). Extract them first and keep them consistent with each other.
 
-- bandTopZ    : always 0 (fixed reference plane)
-- bandBottomZ : negative — equals band thickness at bottom shank (e.g. -2.5)
-- galleryBaseZ: where the basket/head starts, typically 0
-- galleryTopZ : where gallery walls end and the stone sits (e.g. 4.5)
+- bandTopZ    : always 0 (the band-top reference plane; the seat for the head)
+- bandBottomZ : leave 0 unless a feature clearly sits below the band top (e.g. a peg/under-bezel).
+                This is NOT the band's radial thickness — record thickness in section 2 instead.
+- galleryBaseZ: where the basket/head foot begins relative to band top, typically 0
+- galleryTopZ : height above band top where gallery walls end and the stone sits (e.g. 4.5)
 - stoneGirdleZ: equals galleryTopZ for prong/basket settings; may differ for bezel
 - stoneTableZ : stoneGirdleZ + crown height (crown height ≈ stone_diameter × 0.16 for round brilliants)
-- prongTipZ   : stoneTableZ + extensionAboveStone (typically +1.0 to +1.5 mm above table)
+- prongTipZ   : stoneTableZ + extensionAboveStone. MEASURE extensionAboveStone directly from the
+                gap you can see between the prong tips and the table in the image — do not default
+                to a typical value. Most well-set prongs end AT or barely above the table (0–0.6 mm);
+                only use anything near 1.0–1.5 mm if the photo clearly shows tall talon-style prongs
+                rising well past the crown. If the prongs are not visible/obscured, use 0.4 mm.
 - haloPlaneZ  : set 0 if no halo; otherwise ≈ galleryBaseZ
 
 ════════════════════════════════════════════════════════
@@ -87,9 +97,13 @@ General rules:
 ### Prong geometry — fill into section 5 (centerStoneAnalysis.setting):
 - prongAngularPositions: e.g. [0, 90, 180, 270] for 4-prong; [0, 60, 120, 180, 240, 300] for 6-prong
 - baseRadialOffset: mm from ring center where prong starts (≈ stone_radius + 0.2 mm)
-- tipRadialOffset: mm at prong tip (≈ baseRadialOffset + 0.5 mm due to outward splay)
-- splayAngleDegrees: outward tilt from vertical — typically 4–5°, range 0–8°
-- extensionAboveStone: mm of prong gripping above stone table (0.8–1.5 mm typical)
+- tipRadialOffset: mm at prong tip — a real prong CURLS INWARD to grip the crown facet edge, so the
+  tip sits INSIDE the table radius, not outside it. tipRadialOffset must be LESS than table_radius
+  (gem_table_diameter / 2). Do not add an outward splay at the tip; any splay belongs lower, near
+  the girdle, before the prong bends over the stone.
+- splayAngleDegrees: outward tilt from vertical near the base only — typically 4–5°, range 0–8°
+- extensionAboveStone: mm of prong visible above stone table — measure from the image, do not
+  default; most prongs sit at 0–0.6 mm above the table (see STEP 3 guidance)
 - extensionBelowGirdle: mm prong extends into gallery below girdle (1.5–2.0 mm typical)
 
 ### Gallery details — fill into section 7 (galleryHeadAssemblyAnalysis):

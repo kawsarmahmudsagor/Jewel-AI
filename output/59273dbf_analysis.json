@@ -1,0 +1,533 @@
+{
+  "expertAnalysisQuestionnaire": {
+    "sections": {
+      "1_generalComponentAnalysis": {
+        "title": "General Component Analysis",
+        "perComponent": {
+          "name": "Solitaire Engagement Ring",
+          "type": "Ring with center stone",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "rotation": {
+            "rx": 0,
+            "ry": 0,
+            "rz": 0
+          },
+          "dimensions": {
+            "radius": 8.25,
+            "diameter": 16.5,
+            "width": 2.0,
+            "height": 6.0,
+            "depth": 2.0,
+            "thickness": 1.8
+          },
+          "shapeClassification": "Circular band with elevated head",
+          "styleClassification": "Classic Solitaire / Cathedral",
+          "parentComponent": null,
+          "childComponents": [
+            "Band",
+            "Gallery/Head",
+            "Prongs",
+            "Center Stone"
+          ],
+          "relationships": [
+            "Band supports gallery",
+            "Gallery supports center stone",
+            "Prongs secure center stone"
+          ],
+          "confidenceScore": 0.92
+        }
+      },
+      "2_ringBandAnalysis": {
+        "title": "Ring Band Analysis",
+        "ringParameters": {
+          "centerPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "orientation": {
+            "rx": 0,
+            "ry": 0,
+            "rz": 0
+          },
+          "primarySymmetryAxis": "Z-axis (vertical)",
+          "innerRadius": 8.25,
+          "innerDiameter": 16.5,
+          "estimatedFingerSize": "US 6"
+        },
+        "bandGeometry": {
+          "widthAtBottomShank": 1.8,
+          "widthAtShoulder": 2.0,
+          "widthNearCenterSetting": 2.2,
+          "thicknessAtBottomShank": 1.6,
+          "thicknessAtShoulder": 1.7,
+          "thicknessAtSplitRegion": null,
+          "bandConfiguration": {
+            "type": "Single Shank",
+            "options": [
+              "Single Shank",
+              "Split Shank",
+              "Double Band",
+              "Triple Band",
+              "Bypass",
+              "Twisted",
+              "Infinity",
+              "Other"
+            ]
+          },
+          "isSymmetrical": true,
+          "crossSectionalShape": {
+            "type": "Round",
+            "options": [
+              "Round",
+              "Comfort Fit",
+              "Half Round",
+              "Flat",
+              "Knife Edge",
+              "Custom"
+            ]
+          },
+          "taperProfile": "Slight taper from bottom to head",
+          "edgeFilletRadius": 0.3
+        },
+        "curvedGeometryAnalysis": {
+          "containsCurves": true,
+          "containsWaves": false,
+          "containsTwists": false,
+          "containsOrganicGeometry": false,
+          "majorCurveCount": 1,
+          "curves": [
+            {
+              "startPosition": {
+                "x": 0,
+                "y": -8.25,
+                "z": 0
+              },
+              "endPosition": {
+                "x": 0,
+                "y": 8.25,
+                "z": 0
+              },
+              "radius": 8.25,
+              "angle": 360,
+              "controlPoints": []
+            }
+          ]
+        }
+      },
+      "3_bandTypeAnalysis": {
+        "title": "Band Type Analysis",
+        "mandatory": true,
+        "bandStyleClassification": {
+          "overallStyle": "Cathedral",
+          "options": [
+            "Single Shank",
+            "Split Shank",
+            "Cathedral",
+            "Infinity",
+            "Twisted",
+            "Bypass",
+            "Custom"
+          ]
+        },
+        "splitShankAnalysis": {
+          "isPresent": false,
+          "isSymmetrical": null,
+          "armsPerSide": null,
+          "totalArms": null,
+          "splitStartPosition": {
+            "x": null,
+            "y": null,
+            "z": null
+          },
+          "splitEndPosition": {
+            "x": null,
+            "y": null,
+            "z": null
+          },
+          "armWidth": null,
+          "armThickness": null,
+          "armSeparationDistance": null,
+          "armCurvatureRadius": null,
+          "armTaperRatio": null,
+          "armOrientation": {
+            "rx": null,
+            "ry": null,
+            "rz": null
+          },
+          "armMergePointAtCenterSetting": null
+        },
+        "shoulderAnalysis": {
+          "style": {
+            "type": "Cathedral",
+            "options": [
+              "Cathedral",
+              "Split",
+              "Straight",
+              "Bypass",
+              "Tapered"
+            ]
+          },
+          "width": 2.0,
+          "height": 3.5,
+          "thickness": 1.7,
+          "curvature": "Smooth sweeping curve from band to head"
+        },
+        "decorativeFeatures": {
+          "pave": false,
+          "engraving": false,
+          "milgrain": false,
+          "filigree": false,
+          "texture": false,
+          "channel": false,
+          "none": true
+        },
+        "bandSummary": {
+          "finalStyleClassification": "Cathedral Solitaire",
+          "totalBandArms": 1,
+          "shankConfiguration": "Single Shank Cathedral",
+          "crossSection": "Round",
+          "overallWidth": 2.0,
+          "overallThickness": 1.7,
+          "shoulderDesign": "Cathedral rise to support head",
+          "decorativeFeaturesPresent": [],
+          "integrationWithCenterSetting": "Cathedral shoulders rise to meet and support the 4-prong head",
+          "confidenceScore": 0.9
+        }
+      },
+      "4_paveAccentStoneAnalysis": {
+        "title": "Pav\u00e9 / Accent Stone Analysis",
+        "isPresent": false,
+        "locations": [],
+        "distributionPattern": null,
+        "averageStoneDiameter": null,
+        "averageStoneRadius": null,
+        "totalStoneCount": 0,
+        "settingStyle": {
+          "type": null,
+          "options": [
+            "Micro Pav\u00e9",
+            "Bead",
+            "Prong",
+            "Flush",
+            "Channel"
+          ]
+        },
+        "arrangementPattern": {
+          "type": null,
+          "options": [
+            "Single Row",
+            "Double Row",
+            "Triple Row",
+            "Scattered"
+          ]
+        },
+        "stones": []
+      },
+      "5_centerStoneAnalysis": {
+        "title": "Center Stone Analysis",
+        "geometry": {
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 4.0
+          },
+          "width": 5.0,
+          "length": 5.0,
+          "depth": 3.1,
+          "diameter": 5.0,
+          "shape": {
+            "type": "Round",
+            "options": [
+              "Round",
+              "Oval",
+              "Cushion",
+              "Emerald",
+              "Pear",
+              "Princess",
+              "Marquise",
+              "Heart",
+              "Radiant"
+            ]
+          },
+          "orientationAngle": 0,
+          "elevationAboveBand": 4.0,
+          "tableDirection": "Upward (perpendicular to band)",
+          "estimatedCutStyle": "Round Brilliant"
+        },
+        "setting": {
+          "type": {
+            "value": "Prong",
+            "options": [
+              "Prong",
+              "Basket",
+              "Cathedral",
+              "Halo",
+              "Bezel",
+              "Peg Head",
+              "Trellis"
+            ]
+          },
+          "prongCount": 4,
+          "prongHeight": 1.0,
+          "prongThickness": 0.6,
+          "prongShape": "Tapered claw",
+          "prongAngularPositions": [
+            0,
+            90,
+            180,
+            270
+          ],
+          "decorativeSettingElementsPresent": false,
+          "relationshipToGalleryHead": "Prongs extend from cathedral gallery head, gripping stone girdle"
+        }
+      },
+      "6_sideStoneAnalysis": {
+        "title": "Side Stone Analysis",
+        "isPresent": false,
+        "totalCount": 0,
+        "stones": []
+      },
+      "7_galleryHeadAssemblyAnalysis": {
+        "title": "Gallery / Head Assembly Analysis",
+        "galleryGeometry": {
+          "isPresent": true,
+          "centerPosition": {
+            "x": 0,
+            "y": 0,
+            "z": 1.75
+          },
+          "width": 5.5,
+          "height": 3.5,
+          "depth": 5.5,
+          "style": {
+            "type": "Cathedral",
+            "options": [
+              "Basket",
+              "Cathedral",
+              "Trellis",
+              "Peg Head",
+              "Halo",
+              "Custom"
+            ]
+          }
+        },
+        "galleryComponents": {
+          "shouldersPresent": true,
+          "railsPresent": false,
+          "bridgesOrSupportBarsPresent": false,
+          "bridgeOrSupportBarCount": 0,
+          "supportRingPresent": false,
+          "decorativeElements": {
+            "filigree": false,
+            "scroll": false,
+            "lattice": false,
+            "openwork": false
+          }
+        },
+        "galleryStoneAnalysis": {
+          "stonesPresent": false,
+          "stoneCount": 0,
+          "stoneSizes": [],
+          "stoneShapes": [],
+          "settingStyle": null
+        }
+      },
+      "8_componentRelationshipMapping": {
+        "title": "Component Relationship Mapping",
+        "perComponent": {
+          "componentName": "Solitaire Ring",
+          "parentComponent": null,
+          "childComponents": [
+            "Band",
+            "Gallery Head",
+            "Prongs",
+            "Center Stone"
+          ],
+          "attachedTo": null,
+          "supports": "Center Stone",
+          "supportedBy": null,
+          "directConnections": [
+            "Band - Gallery Head (supports)",
+            "Gallery Head - Prongs (holds)",
+            "Prongs - Center Stone (secures)",
+            "Cathedral Shoulders - Head (merge)"
+          ]
+        },
+        "keyRelationships": {
+          "bandSupportsGallery": true,
+          "gallerySupportscenterStone": true,
+          "prongsHoldCenterStone": true,
+          "splitArmsMergeIntoHeadAssembly": false
+        }
+      },
+      "9_cadReconstructionParameters": {
+        "title": "CAD Reconstruction Parameters",
+        "perComponent": {
+          "componentName": "Solitaire Engagement Ring",
+          "position": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "rotation": {
+            "rx": 0,
+            "ry": 0,
+            "rz": 0
+          },
+          "dimensions": {
+            "width": 2.0,
+            "height": 6.0,
+            "depth": 2.0,
+            "radius": 8.25,
+            "diameter": 16.5,
+            "thickness": 1.7
+          },
+          "shapeClassification": "Torus with elevated cathedral head and round brilliant center stone",
+          "styleClassification": "Classic Cathedral Solitaire",
+          "settingType": "4-Prong Cathedral",
+          "parentComponent": null,
+          "childComponents": [
+            "Band_Torus",
+            "Cathedral_Shoulders",
+            "Gallery_Cup",
+            "Prongs",
+            "Center_Stone"
+          ],
+          "confidenceScore": 0.9,
+          "proceduralCADParameters": {
+            "targetSoftware": "OpenSCAD",
+            "primitives": [
+              "circle - band cross-section profile",
+              "rotate_extrude - sweeps band profile around Y axis",
+              "sphere - cathedral shoulder cross-sections (hull'd)",
+              "cylinder - gallery cup outer and inner walls",
+              "sphere - prong base and tip (hull'd)",
+              "cylinder - stone crown and pavilion"
+            ],
+            "booleanOperations": [
+              "union - assembly of band + shoulders + cup + prongs + stone",
+              "difference - hollow cup interior (cut tapered cylinder from outer shell)"
+            ],
+            "transformations": [
+              "rotate([90,0,0]) rotate_extrude to make finger-hole axis horizontal (Y)",
+              "rotate([0,0,angle]) for each of 4 prongs at 0/90/180/270",
+              "translate for shoulder offsets along X axis"
+            ],
+            "customParameters": {
+              "cadConstructionGuide": {
+                "bandApproach": "Build a single circular cross-section profile (radius = band_tube_radius = 0.85mm, matching the 1.7mm round cross-section thickness). The profile lives in the XY half-plane as a circle translated to (ring_inner_radius + band_tube_radius, 0). Sweep with rotate_extrude(angle=360), then wrap in rotate([90,0,0]) so the finger-hole axis lies along the world Y axis (horizontal) and the band's outer crest sits at world +Z. band_apex_z = ring_inner_radius + band_tube_radius = 9.10mm is the world-Z anchor seat for the entire head assembly. Slight taper (1.6/1.7 thickness, 1.8/2.0 width) is within measurement noise and treated as uniform round section.",
+                "settingApproach": "Gallery is a small tapered cup at the top of two cathedral shoulders. The cup extends from cup_base_z = gallery_top_z - cup_height (11.0mm world-Z) up to cup_top_z = gallery_top_z (12.6mm world-Z, same as stoneGirdleZ). Outer shell is a tapered cylinder (r1=1.7, r2=2.7, h=1.8). Inner cavity is cut by difference() with a tapered cylinder whose top inner radius (2.5mm) exactly matches gem_girdle_diameter/2 so the stone girdle seats flush. Cathedral shoulders are two arched tubes built via hull() over 13 sphere cross-sections along a quadratic-arch path. Each shoulder starts at (side*shoulder_outer_x, 0, band_apex_z-0.3) sunk into the band top, arches upward via sin(t*90)*shoulder_arch_boost, and lands at (side*shoulder_inner_x, 0, cup_base_z) overlapping the cup base for fusion. The shoulder cross-section sphere radius tapers from 0.55mm at the band to ~0.47mm at the cup.",
+                "prongApproach": "Four prongs placed via for() loop at angular positions [0, 90, 180, 270] degrees. Each prong is a hull() between a base sphere (r=0.30) at radial offset 2.15mm, z = stone_girdle_z - 0.6 (embedded 0.6mm below girdle into the cup seat) and a tip sphere (r=0.18) at radial offset 1.90mm, z = prong_tip_z (1.0mm above stone table). The radial offset decreases from base to tip giving a tapered claw profile. Base sits inside the cup wall; tip extends 1.0mm above the stone table, matching prong_extension_above_stone = 1.0mm from the analysis. The slight inward radial taper (2.15 -> 1.90) provides the characteristic claw grip on the girdle.",
+                "stoneApproach": "Round brilliant approximation as two stacked cylinders. Crown: cylinder r1=2.5 (girdle) to r2=1.7 (table, = 3.4mm table diameter = ~68% of girdle, typical for round brilliant) over gem_crown_height=0.8mm, positioned at z = stone_girdle_z. Pavilion: inverted cone from r1=0.01 (near-point tip) to r2=2.5 (girdle) over gem_pavilion_depth=2.15mm, positioned below the girdle. Pavilion tip sits at pavilion_tip_z = stone_girdle_z - 2.15 = 10.45mm world-Z. Total stone depth = 0.8 + 2.15 = 2.95mm, consistent with a 5.0mm round brilliant. No X/Y scaling needed (lengthToWidthRatio = 1 for round).",
+                "assemblyOrder": [
+                  "Compute band_apex_z and all derived world-Z anchors from assemblyStack",
+                  "Build ring_band via rotate([90,0,0]) rotate_extrude of circular profile",
+                  "Build cathedral_shoulder(+1) and cathedral_shoulder(-1) as hull'd sphere chains",
+                  "Build gallery_cup as difference of two tapered cylinders",
+                  "Place 4 prongs via for() loop with rotate([0,0,angle]) at [0,90,180,270]",
+                  "Build center_stone as union of crown cylinder and pavilion cone",
+                  "Assemble all components in a single union() block"
+                ],
+                "criticalConstraints": [
+                  "Stone girdle MUST sit at exactly stone_girdle_z = 12.60mm world-Z (= band_apex_z + 3.5)",
+                  "Prong tips MUST NOT exceed prong_tip_z = 14.40mm by more than 0.1mm; tip is at band_apex_z + 5.3",
+                  "Prong tips must extend exactly 1.0mm above stone_table_z (prong_extension_above_stone)",
+                  "cup_top_inner_r MUST equal gem_girdle_diameter/2 = 2.5mm exactly so the stone seats flush",
+                  "Cathedral shoulder start MUST overlap the band (z_start sinks 0.3mm below band_apex_z)",
+                  "Cathedral shoulder end MUST overlap the cup base (z_end = cup_base_z) for solid fusion",
+                  "Gallery cup base MUST extend below band_apex_z for union with band/shoulders",
+                  "All head Z coordinates derived from band_apex_z + (stackValue - bandTopZ); never raw stack values",
+                  "Finger-hole axis is along Y (horizontal); rotate_extrude swept with rotate([90,0,0]) to achieve this",
+                  "Every component must share a face or overlap with its parent \u2014 no floating geometry"
+                ]
+              },
+              "ring_inner_radius": 8.25,
+              "ring_inner_diameter": 16.5,
+              "band_tube_radius": 0.85,
+              "band_outer_radius": 9.1,
+              "band_width_shoulder": 2.0,
+              "band_thickness_shoulder": 1.7,
+              "shoulder_outer_x": 2.5,
+              "shoulder_inner_x": 1.3,
+              "shoulder_radius": 0.55,
+              "shoulder_arch_boost": 0.5,
+              "cup_height": 1.6,
+              "cup_base_outer_r": 1.7,
+              "cup_top_outer_r": 2.7,
+              "cup_top_inner_r": 2.5,
+              "cup_wall_thickness": 0.3,
+              "prong_count": 4,
+              "prong_base_radius": 0.3,
+              "prong_tip_radius": 0.18,
+              "prong_base_radial": 2.15,
+              "prong_tip_radial": 1.9,
+              "prong_extension_below": 0.6,
+              "prong_extension_above_stone": 1.0,
+              "gem_girdle_diameter": 5.0,
+              "gem_table_diameter": 3.4,
+              "gem_crown_height": 0.8,
+              "gem_pavilion_depth": 2.15,
+              "band_apex_z": 9.1,
+              "gallery_top_z": 12.6,
+              "stone_girdle_z": 12.6,
+              "stone_table_z": 13.4,
+              "prong_tip_z": 14.4
+            }
+          },
+          "assemblyStackUsed": {
+            "bandTopZ": 0,
+            "galleryTopZ": 3.5,
+            "stoneGirdleZ": 3.5,
+            "stoneTableZ": 4.3,
+            "prongTipZ": 5.3,
+            "band_apex_z_world": 9.1
+          }
+        }
+      }
+    }
+  },
+  "photoContext": {
+    "viewAngle": "three_quarter",
+    "estimatedTiltDegrees": 30,
+    "reliableDimensions": [
+      "width",
+      "height"
+    ],
+    "visibleComponents": [
+      "Band",
+      "Cathedral shoulders",
+      "4-Prong head",
+      "Round brilliant center stone",
+      "Stone table and crown facets"
+    ],
+    "partiallyVisibleComponents": [
+      "Pavilion of stone (obscured by prongs)",
+      "Inner band surface (partially)"
+    ],
+    "hiddenComponents": [
+      "Bottom of band",
+      "Pavilion underside",
+      "Opposite side of band"
+    ]
+  },
+  "assemblyStack": {
+    "bandTopZ": 0,
+    "bandBottomZ": 0,
+    "galleryBaseZ": 0,
+    "galleryTopZ": 3.5,
+    "stoneGirdleZ": 3.5,
+    "stoneTableZ": 4.3,
+    "prongTipZ": 5.3,
+    "haloPlaneZ": 0
+  },
+  "gemstoneColor": {
+    "colorName": "Colorless (Diamond)",
+    "colorHex": "#E8F4FF",
+    "transparency": "Transparent"
+  }
+}

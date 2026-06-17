@@ -1,10 +1,12 @@
-import base64
 import json
 import os
 from pathlib import Path
 
 from openai import OpenAI
 from dotenv import load_dotenv
+
+from json_utils import parse_llm_json
+from image_utils import encode_image_data_url
 
 load_dotenv()
 
@@ -28,15 +30,10 @@ def _load_prompt() -> str:
         return f.read()
 
 
-def _encode_image(image_bytes: bytes, content_type: str) -> str:
-    encoded = base64.b64encode(image_bytes).decode("utf-8")
-    return f"data:{content_type};base64,{encoded}"
-
-
 def extract(image_bytes: bytes, content_type: str) -> dict:
     schema = _load_schema()
     system_prompt = _load_prompt()
-    image_url = _encode_image(image_bytes, content_type)
+    image_url = encode_image_data_url(image_bytes, content_type)
 
     response = _client.chat.completions.create(
         model=_model,
@@ -65,11 +62,6 @@ def extract(image_bytes: bytes, content_type: str) -> dict:
         temperature=0.2,
     )
 
-    raw = response.choices[0].message.content.strip()
+    raw = response.choices[0].message.content
 
-    # strip markdown code fences if the model wraps the response
-    if raw.startswith("```"):
-        lines = raw.splitlines()
-        raw = "\n".join(lines[1:-1] if lines[-1].strip() == "```" else lines[1:])
-
-    return json.loads(raw)
+    return parse_llm_json(raw)

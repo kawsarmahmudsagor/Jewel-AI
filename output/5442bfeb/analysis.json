@@ -1,0 +1,531 @@
+{
+  "expertAnalysisQuestionnaire": {
+    "sections": {
+      "1_generalComponentAnalysis": {
+        "title": "General Component Analysis",
+        "perComponent": [
+          {
+            "name": "Ring Band",
+            "type": "Shank",
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": -8.25
+            },
+            "rotation": {
+              "rx": 0.0,
+              "ry": 0.0,
+              "rz": 0.0
+            },
+            "dimensions": {
+              "radius": 8.25,
+              "diameter": 16.5,
+              "width": 2.2,
+              "height": 16.5,
+              "depth": 18.1,
+              "thickness": 1.6
+            },
+            "shapeClassification": "Torus",
+            "styleClassification": "Cathedral",
+            "parentComponent": "Assembly",
+            "childComponents": [
+              "Shoulder Pav\u00e9 Stones"
+            ],
+            "relationships": [
+              "Supports the gallery head assembly"
+            ],
+            "confidenceScore": 0.95
+          },
+          {
+            "name": "Center Stone",
+            "type": "Gemstone",
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 4.5
+            },
+            "rotation": {
+              "rx": 0.0,
+              "ry": 0.0,
+              "rz": 0.0
+            },
+            "dimensions": {
+              "radius": 3.25,
+              "diameter": 6.5,
+              "width": 6.5,
+              "height": 4.0,
+              "depth": 6.5,
+              "thickness": null
+            },
+            "shapeClassification": "Round Brilliant",
+            "styleClassification": "Facet Cut",
+            "parentComponent": "Gallery Head Assembly",
+            "childComponents": [],
+            "relationships": [
+              "Held by four prongs",
+              "Surrounded by halo"
+            ],
+            "confidenceScore": 0.98
+          },
+          {
+            "name": "Halo Assembly",
+            "type": "Setting Component",
+            "position": {
+              "x": 0.0,
+              "y": 0.0,
+              "z": 3.8
+            },
+            "rotation": {
+              "rx": 0.0,
+              "ry": 0.0,
+              "rz": 0.0
+            },
+            "dimensions": {
+              "radius": 4.75,
+              "diameter": 9.5,
+              "width": 9.5,
+              "height": 1.5,
+              "depth": 9.5,
+              "thickness": 1.5
+            },
+            "shapeClassification": "Torus",
+            "styleClassification": "Halo",
+            "parentComponent": "Gallery Head Assembly",
+            "childComponents": [
+              "Halo Pav\u00e9 Stones"
+            ],
+            "relationships": [
+              "Surrounds center stone",
+              "Supported by cathedral shoulders and basket rails"
+            ],
+            "confidenceScore": 0.95
+          }
+        ]
+      },
+      "2_ringBandAnalysis": {
+        "title": "Ring Band Analysis",
+        "ringParameters": {
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": -8.25
+          },
+          "orientation": {
+            "rx": 0.0,
+            "ry": 0.0,
+            "rz": 0.0
+          },
+          "primarySymmetryAxis": "Y",
+          "innerRadius": 8.25,
+          "innerDiameter": 16.5,
+          "estimatedFingerSize": "US 6"
+        },
+        "bandGeometry": {
+          "widthAtBottomShank": 2.0,
+          "widthAtShoulder": 2.2,
+          "widthNearCenterSetting": 1.8,
+          "thicknessAtBottomShank": 1.6,
+          "thicknessAtShoulder": 2.1,
+          "thicknessAtSplitRegion": null,
+          "bandConfiguration": {
+            "type": "Single Shank",
+            "options": [
+              "Single Shank",
+              "Split Shank",
+              "Double Band",
+              "Triple Band",
+              "Bypass",
+              "Twisted",
+              "Infinity",
+              "Other"
+            ]
+          },
+          "isSymmetrical": true,
+          "crossSectionalShape": {
+            "type": "Comfort Fit",
+            "options": [
+              "Round",
+              "Comfort Fit",
+              "Half Round",
+              "Flat",
+              "Knife Edge",
+              "Custom"
+            ]
+          },
+          "taperProfile": "Slightly tapered towards the bottom and narrowing slightly at the very top of the cathedral shoulders",
+          "edgeFilletRadius": 0.2
+        },
+        "curvedGeometryAnalysis": {
+          "containsCurves": true,
+          "containsWaves": false,
+          "containsTwists": false,
+          "containsOrganicGeometry": false,
+          "majorCurveCount": 1,
+          "curves": [
+            {
+              "startPosition": {
+                "x": -8.25,
+                "y": 0.0,
+                "z": -8.25
+              },
+              "endPosition": {
+                "x": 8.25,
+                "y": 0.0,
+                "z": -8.25
+              },
+              "radius": 8.25,
+              "angle": 180.0,
+              "controlPoints": []
+            }
+          ]
+        }
+      },
+      "3_bandTypeAnalysis": {
+        "title": "Band Type Analysis",
+        "mandatory": true,
+        "bandStyleClassification": {
+          "overallStyle": "Cathedral",
+          "options": [
+            "Single Shank",
+            "Split Shank",
+            "Cathedral",
+            "Infinity",
+            "Twisted",
+            "Bypass",
+            "Custom"
+          ]
+        },
+        "splitShankAnalysis": {
+          "isPresent": false,
+          "isSymmetrical": null,
+          "armsPerSide": null,
+          "totalArms": null,
+          "splitStartPosition": null,
+          "splitEndPosition": null,
+          "armWidth": null,
+          "armThickness": null,
+          "armSeparationDistance": null,
+          "armCurvatureRadius": null,
+          "armTaperRatio": null,
+          "armOrientation": null,
+          "armMergePointAtCenterSetting": null
+        },
+        "shoulderAnalysis": {
+          "style": {
+            "type": "Cathedral",
+            "options": [
+              "Cathedral",
+              "Split",
+              "Straight",
+              "Bypass",
+              "Tapered"
+            ]
+          },
+          "width": 2.2,
+          "height": 6.5,
+          "thickness": 2.1,
+          "curvature": 12.0
+        },
+        "decorativeFeatures": {
+          "pave": true,
+          "engraving": false,
+          "milgrain": false,
+          "filigree": false,
+          "texture": false,
+          "channel": false,
+          "none": false
+        },
+        "bandSummary": {
+          "finalStyleClassification": "Cathedral Pav\u00e9 Shank",
+          "totalBandArms": 2,
+          "shankConfiguration": "Single Shank",
+          "crossSection": "Comfort Fit",
+          "overallWidth": 2.2,
+          "overallThickness": 2.1,
+          "shoulderDesign": "Cathedral",
+          "decorativeFeaturesPresent": [
+            "Pav\u00e9"
+          ],
+          "integrationWithCenterSetting": "Cathedral shoulders rise up to support the base of the halo head assembly",
+          "confidenceScore": 0.95
+        }
+      },
+      "4_paveAccentStoneAnalysis": {
+        "title": "Pav\u00e9 / Accent Stone Analysis",
+        "isPresent": true,
+        "locations": [
+          "Shoulders",
+          "Halo"
+        ],
+        "distributionPattern": "Linear rows on shoulders, circular array on halo",
+        "averageStoneDiameter": 1.3,
+        "averageStoneRadius": 0.65,
+        "totalStoneCount": 38,
+        "settingStyle": {
+          "type": "Micro Pav\u00e9",
+          "options": [
+            "Micro Pav\u00e9",
+            "Bead",
+            "Prong",
+            "Flush",
+            "Channel"
+          ]
+        },
+        "arrangementPattern": {
+          "type": "Single Row",
+          "options": [
+            "Single Row",
+            "Double Row",
+            "Triple Row",
+            "Scattered"
+          ]
+        },
+        "stones": [
+          {
+            "position": {
+              "x": -4.0,
+              "y": 0.0,
+              "z": 3.8
+            },
+            "diameter": 1.3,
+            "settingType": "Micro Pav\u00e9"
+          }
+        ]
+      },
+      "5_centerStoneAnalysis": {
+        "title": "Center Stone Analysis",
+        "geometry": {
+          "position": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 4.5
+          },
+          "width": 6.5,
+          "length": 6.5,
+          "depth": 4.0,
+          "diameter": 6.5,
+          "shape": {
+            "type": "Round",
+            "options": [
+              "Round",
+              "Oval",
+              "Cushion",
+              "Emerald",
+              "Pear",
+              "Princess",
+              "Marquise",
+              "Heart",
+              "Radiant"
+            ]
+          },
+          "orientationAngle": 0.0,
+          "elevationAboveBand": 4.5,
+          "tableDirection": [
+            0.0,
+            0.0,
+            1.0
+          ],
+          "estimatedCutStyle": "Round Brilliant"
+        },
+        "setting": {
+          "type": {
+            "value": "Halo",
+            "options": [
+              "Prong",
+              "Basket",
+              "Cathedral",
+              "Halo",
+              "Bezel",
+              "Peg Head",
+              "Trellis"
+            ]
+          },
+          "prongCount": 4,
+          "prongHeight": 1.8,
+          "prongThickness": 0.8,
+          "prongShape": "Round",
+          "prongAngularPositions": [
+            45,
+            135,
+            225,
+            315
+          ],
+          "decorativeSettingElementsPresent": "Under-halo support gallery",
+          "relationshipToGalleryHead": "Prongs are integrated into the inner rim of the halo/basket assembly"
+        }
+      },
+      "6_sideStoneAnalysis": {
+        "title": "Side Stone Analysis",
+        "isPresent": false,
+        "totalCount": 0,
+        "stones": []
+      },
+      "7_galleryHeadAssemblyAnalysis": {
+        "title": "Gallery / Head Assembly Analysis",
+        "galleryGeometry": {
+          "isPresent": true,
+          "centerPosition": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": 3.0
+          },
+          "width": 9.5,
+          "height": 4.5,
+          "depth": 9.5,
+          "style": {
+            "type": "Halo",
+            "options": [
+              "Basket",
+              "Cathedral",
+              "Trellis",
+              "Peg Head",
+              "Halo",
+              "Custom"
+            ]
+          }
+        },
+        "galleryComponents": {
+          "shouldersPresent": true,
+          "railsPresent": true,
+          "bridgesOrSupportBarsPresent": true,
+          "bridgeOrSupportBarCount": 2,
+          "supportRingPresent": true,
+          "decorativeElements": {
+            "filigree": false,
+            "scroll": false,
+            "lattice": false,
+            "openwork": true
+          }
+        },
+        "galleryStoneAnalysis": {
+          "stonesPresent": true,
+          "stoneCount": 20,
+          "stoneSizes": [
+            1.3
+          ],
+          "stoneShapes": [
+            "Round"
+          ],
+          "settingStyle": "Micro Pav\u00e9"
+        }
+      },
+      "8_componentRelationshipMapping": {
+        "title": "Component Relationship Mapping",
+        "perComponent": [
+          {
+            "componentName": "Center Stone",
+            "parentComponent": "Gallery Head Assembly",
+            "childComponents": [],
+            "attachedTo": "Prongs",
+            "supports": null,
+            "supportedBy": "Prongs",
+            "directConnections": [
+              "Prongs"
+            ]
+          },
+          {
+            "componentName": "Halo Assembly",
+            "parentComponent": "Gallery Head Assembly",
+            "childComponents": [
+              "Halo Pav\u00e9 Stones"
+            ],
+            "attachedTo": "Cathedral Shoulders",
+            "supports": "Center Stone (indirectly via prongs)",
+            "supportedBy": "Cathedral Shoulders, Basket Rails",
+            "directConnections": [
+              "Cathedral Shoulders",
+              "Basket Rails",
+              "Prongs"
+            ]
+          }
+        ],
+        "keyRelationships": {
+          "bandSupportsGallery": true,
+          "gallerySupportscenterStone": true,
+          "prongsHoldCenterStone": true,
+          "splitArmsMergeIntoHeadAssembly": false
+        }
+      },
+      "9_cadReconstructionParameters": {
+        "band": {
+          "inner_radius": 8.25,
+          "thickness": 1.6,
+          "width": 2.0,
+          "profile_type": "comfort_fit"
+        },
+        "shoulders": {
+          "style": "cathedral",
+          "pave_present": true,
+          "pave_stone_count_per_side": 7,
+          "pave_stone_radius": 0.55
+        },
+        "halo": {
+          "present": true,
+          "outer_radius": 4.8,
+          "inner_radius": 3.3,
+          "pave_stone_count": 20,
+          "pave_stone_radius": 0.55
+        },
+        "gallery": {
+          "style": "open_basket",
+          "under_rail_z": 12.0,
+          "strut_count": 4
+        },
+        "prongs": {
+          "count": 4,
+          "style": "claw",
+          "angles": [
+            45,
+            135,
+            225,
+            315
+          ]
+        },
+        "center_stone": {
+          "shape": "round_brilliant",
+          "radius": 3.25,
+          "girdle_z": 13.8
+        }
+      }
+    }
+  },
+  "photoContext": {
+    "viewAngle": "three_quarter",
+    "estimatedTiltDegrees": 45.0,
+    "reliableDimensions": [
+      "width",
+      "depth"
+    ],
+    "visibleComponents": [
+      "Center Stone",
+      "Halo",
+      "Prongs",
+      "Cathedral Shoulders",
+      "Shank",
+      "Shoulder Pav\u00e9 Stones",
+      "Halo Pav\u00e9 Stones"
+    ],
+    "partiallyVisibleComponents": [
+      "Under-gallery basket rails",
+      "Inner shank wall"
+    ],
+    "hiddenComponents": [
+      "Bottom of center stone pavilion"
+    ]
+  },
+  "assemblyStack": {
+    "bandTopZ": 0.0,
+    "bandBottomZ": 0.0,
+    "galleryBaseZ": 0.0,
+    "galleryTopZ": 3.8,
+    "stoneGirdleZ": 4.5,
+    "stoneTableZ": 5.5,
+    "prongTipZ": 5.7,
+    "haloPlaneZ": 3.8
+  },
+  "gemstoneColor": {
+    "colorName": "Colorless",
+    "colorHex": "#E8F4FF",
+    "transparency": "Transparent"
+  }
+}

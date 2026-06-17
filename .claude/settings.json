@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell($paths = @\\(\"C:\\\\Program Files\\\\OpenSCAD\\\\openscad.exe\",\"C:\\\\Program Files \\(x86\\)\\\\OpenSCAD\\\\openscad.exe\"\\); foreach \\($p in $paths\\) { Test-Path $p }; Get-Command openscad -ErrorAction SilentlyContinue)",
+      "Bash(python -c ' *)",
+      "Bash(\"/c/Program Files/OpenSCAD/openscad.exe\" -o output/_test_draft.png --imgsize=800,800 --render --autocenter --viewall output/_test_draft.scad)",
+      "Bash(python -c \"import pytest; print\\(pytest.__version__\\)\")",
+      "Bash(cat requirements.txt)",
+      "Bash(ls tests *)",
+      "Bash(python -m unittest tests.test_scad_render tests.test_generator_refine -v)",
+      "Bash(where python *)",
+      "Bash(pip show *)",
+      "Bash(.venv/Scripts/python.exe --version)",
+      "Bash(.venv/Scripts/python.exe -c \"import openai; print\\('ok'\\)\")",
+      "Bash(.venv/Scripts/python.exe -m unittest tests.test_scad_builder tests.test_scad_render tests.test_generator_refine -v)",
+      "Bash(rm -rf tests/_artifacts)",
+      "Bash(.venv/Scripts/python.exe -c \"import main; print\\('main.py imports OK'\\)\")",
+      "Bash(grep -o \"OPENROUTER_API_KEY=.\\\\{0,8\\\\}\" .env)",
+      "Bash(grep -vE \"^\\\\./\\\\.venv|^\\\\./output|^\\\\./tests\")",
+      "Bash(ls -la \"/c/Users/BS23-DESKTOP-00038/Downloads/rings_new/C00218764_38844750_1080x.webp\")",
+      "Read(//c/Users/BS23-DESKTOP-00038/Downloads/rings_new/**)",
+      "Bash(.venv/Scripts/python.exe -c ' *)",
+      "WebFetch(domain:openrouter.ai)",
+      "WebSearch"
+    ]
+  }
+}
